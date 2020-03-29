@@ -12,14 +12,25 @@ import java.util.Vector;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 import configuration.ConfigXML;
 import configuration.UtilDate;
 import domain.Event;
+import domain.Kuota;
 import domain.Question;
+import exceptions.ApustuaAlreadyExist;
+import exceptions.DirurikEZ;
+import exceptions.EmaitzaExist;
+import exceptions.KuotaAlreadyExist;
 import exceptions.QuestionAlreadyExist;
+import exceptions.UserNotExists;
+import domain.Admin;
+import domain.Apustua;
+import domain.Bezero;
+import domain.Erabiltzaile;
 
 /**
  * It implements the data access to the objectDb database
@@ -133,7 +144,26 @@ public class DataAccess  {
 				q6=ev17.addQuestion("Golak sartuko dira lehenengo zatian?",2);
 				
 			}
+			Kuota k1, k2, k3;
+			k1=q1.addKuota("Atlético", 1.30);
+			k2=q1.addKuota("Enpate", 1.70);
+			k3=q1.addKuota("Athletic", 1.80);
 			
+			db.persist(k1);
+			db.persist(k2);
+			db.persist(k3);
+			
+			Erabiltzaile newErab = new Bezero("Mariane","Menath",21,"mariane@mail.com","12345678");
+			Erabiltzaile newErab2 = new Bezero("Iker","Ossa",21,"iker@mail.com","12345678");
+			Erabiltzaile newErab3 = new Bezero("Xabier","Larrea",20,"larrea@mail.com","12345678");
+			Erabiltzaile admin = new Admin("Administratzailea", "BereAbizena",95,"admin@bets.com","Admin1234");
+
+			
+			db.persist(admin);
+			db.persist(newErab);
+			db.persist(newErab2);
+			db.persist(newErab3);
+
 			
 			db.persist(q1);
 			db.persist(q2);
@@ -242,8 +272,128 @@ public class DataAccess  {
 	 	return res;
 	}
 	
+	public Erabiltzaile isLogin(String posta, String pasahitza) {
+		TypedQuery<Erabiltzaile> query = db.createQuery("SELECT p FROM Erabiltzaile p WHERE p.posta=?1 AND p.pasahitza=?2", Erabiltzaile.class);
+		query.setParameter(1, posta);
+		query.setParameter(2, pasahitza);
+		try { return query.getSingleResult();}
+		catch (NoResultException e) {
+			return null;
+		}
+	}
 
+	public int storeUser(Erabiltzaile newUser) {
+		
+		TypedQuery<Bezero> query;
+		
+		query = db.createQuery("SELECT p from Bezero p WHERE p.posta=?1", Bezero.class);
+		query.setParameter(1, newUser.getPosta());
+		if(!query.getResultList().isEmpty()) {
+				return 1;
+		} else {
+			System.out.println("User created");
+			db.getTransaction().begin();
+			db.persist(newUser);
+			db.getTransaction().commit();
+			return 0;
+		}
+		
+	}
 	
+	public int storeEvent(String deskripzioa, Date data) {
+		
+		TypedQuery<Event> query;
+		
+		query = db.createQuery("SELECT e from Event e WHERE e.description=?1 AND e.eventDate=?2", Event.class);
+        query.setParameter(1, deskripzioa);
+        query.setParameter(2, data);
+		if(!query.getResultList().isEmpty()) {
+				return 1;
+		}
+		else {
+			System.out.println("Event created");
+			Event gertaera = new Event(deskripzioa, data); 
+			db.getTransaction().begin();
+			db.persist(gertaera);
+			db.getTransaction().commit();
+			return 0;
+		}
+		
+	}
+	
+	public Kuota sortuKuota(Question question, String deskripzioa, double pronostikoa) throws KuotaAlreadyExist{
+		System.out.println(">> DataAccess: createKuota=> question= "+question+" dezkripzioa= "+deskripzioa+" pronostikoa="+pronostikoa);
+		
+		Question q = db.find(Question.class, question.getQuestionNumber());
+				
+		if (q.DoesKuotaExists(deskripzioa)) throw new KuotaAlreadyExist("ErrorQueryAlreadyExist");
+				
+			db.getTransaction().begin();
+			Kuota k = q.addKuota(deskripzioa, pronostikoa);
+			//db.persist(q);
+			db.persist(q); // db.persist(q) not required when CascadeType.PERSIST is added in questions property of Event class
+							// @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+			db.getTransaction().commit();
+			return k;
+			
+	}
+	
+	public Apustua sortuApustua(double zenbatekoa, Question qu, Kuota kuota, Erabiltzaile user) throws ApustuaAlreadyExist, DirurikEZ {
+					
+		db.getTransaction().begin();
+		
+		TypedQuery<Erabiltzaile> query = db.createQuery("SELECT u FROM Erabiltzaile u WHERE u.posta=?1", Erabiltzaile.class);
+		query.setParameter(1, user.getPosta());
+		Erabiltzaile us = query.getSingleResult();
+		
+		TypedQuery<Kuota> query1 = db.createQuery("SELECT k FROM Kuota k WHERE k.kuotaID=?1", Kuota.class);
+		query1.setParameter(1, kuota.getkuotaID());
+		Kuota k = query1.getSingleResult();
+		
+		if (us.DoesApustuaExists(qu)) throw new ApustuaAlreadyExist("ErrorApustuaAlreadyExist");
+		else if(us.getDiruZorroa()<zenbatekoa)throw new DirurikEZ("Ez duzu diru nahikorik");
+		
+		Apustua ap = us.addApustu(zenbatekoa, k);
+		zenbatekoa=us.getDiruZorroa()-zenbatekoa;
+		us.setDiruZorroa(zenbatekoa);
+					
+		//db.persist(q);
+		db.persist(us); // db.persist(q) not required when CascadeType.PERSIST is added in questions property of Event class
+						// @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+		db.getTransaction().commit();
+		return ap;
+			
+	}
+	
+	public void updateQuestion(Integer ID, String result) throws EmaitzaExist {
+		
+		db.getTransaction().begin();
+		TypedQuery<Question> query = db.createQuery("SELECT q FROM Question q WHERE q.questionNumber=?1", Question.class);
+		query.setParameter(1, ID);
+		Question q = query.getSingleResult();
+		if(q.getResult().compareTo(result)==0)throw new EmaitzaExist("Emaitza gordeta dago jada");
+		q.setResult(result);
+		db.persist(q);
+		db.getTransaction().commit();
+		System.out.println(ID + " galdera eguneratua izan da.");
+
+	}
+	
+	public void updateUser(Erabiltzaile user, double dirua) {
+		
+		db.getTransaction().begin();
+		
+		TypedQuery<Erabiltzaile> query = db.createQuery("SELECT u FROM Erabiltzaile u WHERE u.posta=?1", Erabiltzaile.class);
+		query.setParameter(1, user.getPosta());
+		Erabiltzaile us = query.getSingleResult();
+		dirua+=us.getDiruZorroa();
+		us.setDiruZorroa(dirua);
+		db.persist(us);
+		db.getTransaction().commit();
+		System.out.println(user.getPosta() + " erabiltzailea eguneratua izan da."+dirua);
+
+	}
+		
 	public void close(){
 		db.close();
 		System.out.println("DataBase closed");

@@ -3,8 +3,11 @@ package gui;
 import businessLogic.BLFacade;
 import configuration.UtilDate;
 
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 import com.toedter.calendar.JCalendar;
 
+import domain.Apustua;
+import domain.Erabiltzaile;
 import domain.Kuota;
 import domain.Question;
 import javax.swing.*;
@@ -12,13 +15,17 @@ import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import javax.swing.table.DefaultTableModel;
 
 
-public class FindQuestionsGUI extends JFrame {
+public class ApustuEginGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
+	
+	private Erabiltzaile logeatuta;
 
 	private final JLabel jLabelEventDate = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("EventDate"));
 	private final JLabel jLabelQueries = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Queries")); 
@@ -58,9 +65,16 @@ public class FindQuestionsGUI extends JFrame {
 			"Kuota", 
 
 	};
+	private final JLabel lblZenbatekoa = new JLabel("Apostua zenbatekoa:");
+	private final JButton btnApostuaEgin = new JButton();
+	private final JTextField textZenbatekoa = new JTextField();
+	private final JLabel label = new JLabel("€");
 
-	public FindQuestionsGUI()
+	public ApustuEginGUI(Erabiltzaile logeatuta)
 	{
+		this.logeatuta=logeatuta;
+		textZenbatekoa.setBounds(226, 375, 146, 26);
+		textZenbatekoa.setColumns(10);
 		try
 		{
 			jbInit();
@@ -76,18 +90,18 @@ public class FindQuestionsGUI extends JFrame {
 	{
 
 		this.getContentPane().setLayout(null);
-		this.setSize(new Dimension(778, 477));
+		this.setSize(new Dimension(779, 505));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("QueryQueries"));
 
 		jLabelEventDate.setBounds(new Rectangle(40, 15, 140, 25));
-		jLabelQueries.setBounds(40, 222, 406, 14);
+		jLabelQueries.setBounds(40, 216, 406, 14);
 		jLabelEvents.setBounds(295, 19, 259, 16);
 
 		this.getContentPane().add(jLabelEventDate, null);
 		this.getContentPane().add(jLabelQueries);
 		this.getContentPane().add(jLabelEvents);
 
-		jButtonClose.setBounds(new Rectangle(270, 384, 130, 30));
+		jButtonClose.setBounds(new Rectangle(377, 416, 130, 30));
 
 		jButtonClose.addActionListener(new ActionListener()
 		{
@@ -158,8 +172,8 @@ public class FindQuestionsGUI extends JFrame {
 		this.getContentPane().add(jCalendar1, null);
 		
 		scrollPaneEvents.setBounds(new Rectangle(292, 50, 346, 150));
-		scrollPaneQueries.setBounds(new Rectangle(40, 252, 406, 116));
-		scrollPaneKuotak.setBounds(new Rectangle(446, 252, 295, 116));
+		scrollPaneQueries.setBounds(new Rectangle(40, 246, 406, 116));
+		scrollPaneKuotak.setBounds(new Rectangle(446, 246, 295, 116));
 
 		tableEvents.addMouseListener(new MouseAdapter() {
 			@Override
@@ -214,6 +228,7 @@ public class FindQuestionsGUI extends JFrame {
 				Vector<Kuota> kuotak=q.getKuota();
 
 				tableModelKuotak.setDataVector(null, columnNamesKuotak);
+				tableModelKuotak.setColumnCount(3);
 
 				if (kuotak.isEmpty())
 					jLabelQueries.setText("NoKuota" + ": "+q.getQuestion());
@@ -225,10 +240,24 @@ public class FindQuestionsGUI extends JFrame {
 
 					row.add(k.getdeskripzioa());
 					row.add(k.getpronostikoa());
+					row.add(k);
 					tableModelKuotak.addRow(row);	
 				}
 				tableKuota.getColumnModel().getColumn(0).setPreferredWidth(70);
 				tableKuota.getColumnModel().getColumn(1).setPreferredWidth(25);
+				tableKuota.getColumnModel().removeColumn(tableKuota.getColumnModel().getColumn(2));
+			}
+		});
+		
+		tableKuota.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				lblZenbatekoa.setVisible(true);
+				textZenbatekoa.setVisible(true);
+				label.setVisible(true);
+				btnApostuaEgin.setEnabled(true);			
 			}
 		});
 		
@@ -242,10 +271,102 @@ public class FindQuestionsGUI extends JFrame {
 		this.getContentPane().add(scrollPaneEvents, null);
 		this.getContentPane().add(scrollPaneQueries, null);
 		this.getContentPane().add(scrollPaneKuotak, null);
+		lblZenbatekoa.setBounds(50, 378, 149, 20);
+		
+		getContentPane().add(lblZenbatekoa);
+		btnApostuaEgin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int i=tableKuota.getSelectedRow();
+				Kuota k=(Kuota) tableModelKuotak.getValueAt(i,2);
+				
+				int y=tableQueries.getSelectedRow();
+				Question q=(Question) tableModelQueries.getValueAt(y,2);
+				
+				int j=tableEvents.getSelectedRow();
+				domain.Event ev=(domain.Event) tableModelEvents.getValueAt(j,2);
+				
+				double aZ = Double.parseDouble(textZenbatekoa.getText());
+				
+				if (textZenbatekoa.getText().length()>0 && aZ<= q.getBetMinimum()) {
+					jLabelQueries.setText("Ez da apustu minimoa betetzen Min: 1€");
+				} else
+					if(isExpire(ev.getEventDate())) {
+						jLabelQueries.setText("Ezin da gertaera honetan apustu egin");
+					}
+					else {
+						try {
+							BLFacade b = MainGUI.getBusinessLogic();
+							Apustua ap=b.sortuApustua(aZ, q, k, logeatuta);
+							if(ap!=null)
+							jLabelQueries.setText("Apustua ongi egin da. " + logeatuta.getPosta() + " kontuarekin "+ aZ+" €");
+							else {
+								jLabelQueries.setText("Arazo bat egon da apustuarekin");
+							}
+						}catch(Exception e4){
+							jLabelQueries.setText(e4.getMessage());
+						}	
+					}
+			}
+		});
+		btnApostuaEgin.setText(ResourceBundle.getBundle("Etiquetas").getString("ApustuEginGUI.btnApostuaEgin.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btnApostuaEgin.setBounds(189, 417, 140, 29);
+		
+		getContentPane().add(btnApostuaEgin);
+		
+		getContentPane().add(textZenbatekoa);
+		label.setBounds(377, 377, 69, 20);
+		
+		getContentPane().add(label);
+		
+		lblZenbatekoa.setVisible(false);
+		textZenbatekoa.setVisible(false);
+		label.setVisible(false);
+		btnApostuaEgin.setEnabled(false);
 
 	}
 
 	private void jButton2_actionPerformed(ActionEvent e) {
 		this.setVisible(false);
 	}
+	private boolean isExpire(Date date) {
+	    
+	            SimpleDateFormat sdf =  new SimpleDateFormat("MMM-dd-yyyy hh:mm:ss a"); // Jan-20-2015 1:30:55 PM
+	               Date d=null;
+	               Date d1=null;
+	            String today=   getToday("MMM-dd-yyyy hh:mm:ss a");
+	            try {
+	                //System.out.println("expdate>> "+date);
+	                //System.out.println("today>> "+today+"\n\n");
+	                d=date;
+	                try {
+						d1 = sdf.parse(today);
+					} catch (java.text.ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	                if(d1.compareTo(d) <0){// not expired
+	                    return false;
+	                }else if(d.compareTo(d1)==0){// both date are same
+	                            if(d.getTime() < d1.getTime()){// not expired
+	                                return false;
+	                            }else if(d.getTime() == d1.getTime()){//expired
+	                                return true;
+	                            }else{//expired
+	                                return true;
+	                            }
+	                }else{//expired
+	                    return true;
+	                }
+	            } catch (ParseException e) {
+	                e.printStackTrace();                    
+	                return false;
+	            }
+	    
+	}
+
+
+	  public static String getToday(String format){
+	     Date date = new Date();
+	     return new SimpleDateFormat(format).format(date);
+	 }
 }

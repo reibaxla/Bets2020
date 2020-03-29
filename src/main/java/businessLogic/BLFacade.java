@@ -9,9 +9,17 @@ import java.util.Date;
 
 //import domain.Booking;
 import domain.Question;
+import domain.Apustua;
+import domain.Erabiltzaile;
 import domain.Event;
+import domain.Kuota;
+import exceptions.ApustuaAlreadyExist;
+import exceptions.DirurikEZ;
+import exceptions.EmaitzaExist;
 import exceptions.EventFinished;
+import exceptions.KuotaAlreadyExist;
 import exceptions.QuestionAlreadyExist;
+
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -57,6 +65,19 @@ public interface BLFacade  {
 	 * It is invoked only when the option "initialize" is declared in the tag dataBaseOpenMode of resources/config.xml file
 	 */	
 	@WebMethod public void initializeBD();
+	
+	@WebMethod public Erabiltzaile isLogin(String posta, String pasahitza);
+	
+	@WebMethod public int storeUser(Erabiltzaile newUser);
+	
+	@WebMethod public int storeEvent(String deskripzioa, Date data);
 
+	@WebMethod Kuota createKuota(Question question, String deskripzioa, double pronostikoa) throws KuotaAlreadyExist;
+	
+	@WebMethod Apustua sortuApustua(double zenbatekoa, Question question, Kuota kuota, Erabiltzaile user) throws ApustuaAlreadyExist, DirurikEZ;
+	
+	@WebMethod public void updateQuestion(Integer ID, String result) throws EmaitzaExist;
+	
+	@WebMethod public void updateUser(Erabiltzaile user, double dirua);
 	
 }

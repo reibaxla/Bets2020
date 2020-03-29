@@ -10,8 +10,15 @@ import javax.jws.WebService;
 import configuration.ConfigXML;
 import dataAccess.DataAccess;
 import domain.Question;
+import domain.Apustua;
+import domain.Erabiltzaile;
 import domain.Event;
+import domain.Kuota;
+import exceptions.ApustuaAlreadyExist;
+import exceptions.DirurikEZ;
+import exceptions.EmaitzaExist;
 import exceptions.EventFinished;
+import exceptions.KuotaAlreadyExist;
 import exceptions.QuestionAlreadyExist;
 
 /**
@@ -103,6 +110,67 @@ public class BLFacadeImplementation  implements BLFacade {
 		dBManager.initializeDB();
 		dBManager.close();
 	}
+    
+    @WebMethod
+    public Erabiltzaile isLogin(String posta, String pasahitza) {
+    	DataAccess dBManager = new DataAccess();
+    	Erabiltzaile log = dBManager.isLogin(posta, pasahitza);
+		dBManager.close();
+		return log;
+    }
+    
+    @WebMethod
+    public int storeUser(Erabiltzaile newUser) {
+    	DataAccess dBManager = new DataAccess();
+    	int erreg = dBManager.storeUser(newUser);
+		dBManager.close();
+		return erreg;
+    }
+    
+    @WebMethod
+    public int storeEvent(String deskripzioa, Date data) {
+    	DataAccess dBManager = new DataAccess();
+    	int event = dBManager.storeEvent(deskripzioa, data);
+		dBManager.close();
+		return event;
+    }
+    
+    @WebMethod 
+    public Kuota createKuota(Question question, String deskripzioa, double pronostikoa) throws KuotaAlreadyExist{
+    	 //The minimum bed must be greater than 0
+	    DataAccess dBManager=new DataAccess();
+		Kuota k=null;
+		
+		 k=dBManager.sortuKuota(question, deskripzioa, pronostikoa);		
+
+		dBManager.close();
+		
+		return k;
+    };
+    
+    public Apustua sortuApustua(double zenbatekoa,Question question, Kuota kuota, Erabiltzaile user) throws ApustuaAlreadyExist, DirurikEZ{
+    	
+    	DataAccess dBManager=new DataAccess();
+    	Apustua ap=null;
+ 		
+ 		 ap=dBManager.sortuApustua(zenbatekoa, question, kuota, user);
+
+ 		dBManager.close();
+ 		
+ 		return ap;
+    };
+    
+    public void updateQuestion(Integer ID, String result) throws EmaitzaExist {
+    	DataAccess dBManager = new DataAccess();
+    	dBManager.updateQuestion(ID, result);;
+		dBManager.close();
+    }
+    
+    public void updateUser(Erabiltzaile user, double dirua) {
+    	DataAccess dBManager = new DataAccess();
+    	dBManager.updateUser(user, dirua);
+		dBManager.close();
+    }
 
 }
 

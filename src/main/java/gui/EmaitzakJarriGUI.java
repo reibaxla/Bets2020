@@ -3,6 +3,7 @@ package gui;
 import businessLogic.BLFacade;
 import configuration.UtilDate;
 
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 import com.toedter.calendar.JCalendar;
 
 import domain.Kuota;
@@ -12,12 +13,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.swing.table.DefaultTableModel;
 
 
-public class FindQuestionsGUI extends JFrame {
+public class EmaitzakJarriGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private final JLabel jLabelEventDate = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("EventDate"));
@@ -58,8 +60,9 @@ public class FindQuestionsGUI extends JFrame {
 			"Kuota", 
 
 	};
+	private final JButton btnEmaitza = new JButton("Emaitza");
 
-	public FindQuestionsGUI()
+	public EmaitzakJarriGUI()
 	{
 		try
 		{
@@ -87,7 +90,7 @@ public class FindQuestionsGUI extends JFrame {
 		this.getContentPane().add(jLabelQueries);
 		this.getContentPane().add(jLabelEvents);
 
-		jButtonClose.setBounds(new Rectangle(270, 384, 130, 30));
+		jButtonClose.setBounds(new Rectangle(391, 375, 130, 30));
 
 		jButtonClose.addActionListener(new ActionListener()
 		{
@@ -145,6 +148,7 @@ public class FindQuestionsGUI extends JFrame {
 						tableEvents.getColumnModel().getColumn(0).setPreferredWidth(25);
 						tableEvents.getColumnModel().getColumn(1).setPreferredWidth(268);
 						tableEvents.getColumnModel().removeColumn(tableEvents.getColumnModel().getColumn(2)); // not shown in JTable
+						btnEmaitza.setVisible(false);
 					} catch (Exception e1) {
 
 						jLabelQueries.setText(e1.getMessage());
@@ -187,6 +191,7 @@ public class FindQuestionsGUI extends JFrame {
 				tableQueries.getColumnModel().getColumn(0).setPreferredWidth(25);
 				tableQueries.getColumnModel().getColumn(1).setPreferredWidth(268);
 				tableQueries.getColumnModel().removeColumn(tableQueries.getColumnModel().getColumn(2)); // not shown in JTable
+				btnEmaitza.setVisible(false);
 			}
 		});
 
@@ -210,6 +215,7 @@ public class FindQuestionsGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int i=tableQueries.getSelectedRow();
+				
 				domain.Question q=(domain.Question)tableModelQueries.getValueAt(i,2);
 				Vector<Kuota> kuotak=q.getKuota();
 
@@ -229,6 +235,15 @@ public class FindQuestionsGUI extends JFrame {
 				}
 				tableKuota.getColumnModel().getColumn(0).setPreferredWidth(70);
 				tableKuota.getColumnModel().getColumn(1).setPreferredWidth(25);
+				btnEmaitza.setVisible(false);
+			}
+		});
+		
+		tableKuota.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnEmaitza.setVisible(true);
 			}
 		});
 		
@@ -242,10 +257,79 @@ public class FindQuestionsGUI extends JFrame {
 		this.getContentPane().add(scrollPaneEvents, null);
 		this.getContentPane().add(scrollPaneQueries, null);
 		this.getContentPane().add(scrollPaneKuotak, null);
+		btnEmaitza.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int j=tableEvents.getSelectedRow();
+				domain.Event ev=(domain.Event) tableModelEvents.getValueAt(j,2);
+				if(!isExpire(ev.getEventDate())) {
+					jLabelQueries.setText("Gertaera ez da jokatu");
+				}
+				else {
+					try {
+						int i=tableQueries.getSelectedRow();
+						domain.Question question = (domain.Question)tableModelQueries.getValueAt(i,2);
+						int y= tableKuota.getSelectedRow();
+						
+						String result=(String)tableModelKuotak.getValueAt(y,0);
+						BLFacade b = MainGUI.getBusinessLogic();
+						b.updateQuestion(question.getQuestionNumber(), result);
+						jLabelQueries.setText("Emaitza gorde da");
+					}catch(Exception e4) {
+						jLabelQueries.setText(e4.getMessage());
+					}
+				}
+			}
+		});
+		btnEmaitza.setBounds(216, 376, 115, 29);
+		btnEmaitza.setVisible(false);
+		
+		getContentPane().add(btnEmaitza);
 
 	}
 
 	private void jButton2_actionPerformed(ActionEvent e) {
 		this.setVisible(false);
+	}
+	
+	private boolean isExpire(Date date) {
+	    
+        SimpleDateFormat sdf =  new SimpleDateFormat("MMM-dd-yyyy hh:mm:ss a"); // Jan-20-2015 1:30:55 PM
+           Date d=null;
+           Date d1=null;
+        String today=   getToday("MMM-dd-yyyy hh:mm:ss a");
+        try {
+            //System.out.println("expdate>> "+date);
+            //System.out.println("today>> "+today+"\n\n");
+            d=date;
+            try {
+				d1 = sdf.parse(today);
+			} catch (java.text.ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            if(d1.compareTo(d) <0){// not expired
+                return false;
+            }else if(d.compareTo(d1)==0){// both date are same
+                        if(d.getTime() < d1.getTime()){// not expired
+                            return false;
+                        }else if(d.getTime() == d1.getTime()){//expired
+                            return true;
+                        }else{//expired
+                            return true;
+                        }
+            }else{//expired
+                return true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();                    
+            return false;
+        }
+
+}
+
+
+	public static String getToday(String format){
+		Date date = new Date();
+		return new SimpleDateFormat(format).format(date);
 	}
 }

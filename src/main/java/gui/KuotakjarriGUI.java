@@ -3,21 +3,24 @@ package gui;
 import businessLogic.BLFacade;
 import configuration.UtilDate;
 
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 import com.toedter.calendar.JCalendar;
 
-import domain.Kuota;
 import domain.Question;
+import exceptions.KuotaAlreadyExist;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.swing.table.DefaultTableModel;
 
 
-public class FindQuestionsGUI extends JFrame {
+public class KuotakjarriGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private final JLabel jLabelEventDate = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("EventDate"));
@@ -35,11 +38,9 @@ public class FindQuestionsGUI extends JFrame {
 
 	private JTable tableEvents= new JTable();
 	private JTable tableQueries = new JTable();
-	private final JTable tableKuota = new JTable();
 
 	private DefaultTableModel tableModelEvents;
 	private DefaultTableModel tableModelQueries;
-	private DefaultTableModel tableModelKuotak;
 
 	
 	private String[] columnNamesEvents = new String[] {
@@ -52,14 +53,11 @@ public class FindQuestionsGUI extends JFrame {
 			ResourceBundle.getBundle("Etiquetas").getString("Query")
 
 	};
-	
-	private String[] columnNamesKuotak = new String[] {
-			"Deskripzioa", 
-			"Kuota", 
+	private JTextField txtDeskripzioa;
+	private JTextField txtPronostikoa;
 
-	};
 
-	public FindQuestionsGUI()
+	public KuotakjarriGUI()
 	{
 		try
 		{
@@ -76,7 +74,7 @@ public class FindQuestionsGUI extends JFrame {
 	{
 
 		this.getContentPane().setLayout(null);
-		this.setSize(new Dimension(778, 477));
+		this.setSize(new Dimension(778, 592));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("QueryQueries"));
 
 		jLabelEventDate.setBounds(new Rectangle(40, 15, 140, 25));
@@ -87,7 +85,7 @@ public class FindQuestionsGUI extends JFrame {
 		this.getContentPane().add(jLabelQueries);
 		this.getContentPane().add(jLabelEvents);
 
-		jButtonClose.setBounds(new Rectangle(270, 384, 130, 30));
+		jButtonClose.setBounds(new Rectangle(288, 490, 130, 30));
 
 		jButtonClose.addActionListener(new ActionListener()
 		{
@@ -205,47 +203,107 @@ public class FindQuestionsGUI extends JFrame {
 		tableQueries.getColumnModel().getColumn(0).setPreferredWidth(25);
 		tableQueries.getColumnModel().getColumn(1).setPreferredWidth(268);
 		
-		tableQueries.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int i=tableQueries.getSelectedRow();
-				domain.Question q=(domain.Question)tableModelQueries.getValueAt(i,2);
-				Vector<Kuota> kuotak=q.getKuota();
-
-				tableModelKuotak.setDataVector(null, columnNamesKuotak);
-
-				if (kuotak.isEmpty())
-					jLabelQueries.setText("NoKuota" + ": "+q.getQuestion());
-				else 
-					jLabelQueries.setText("SelectedQuestion" +" "+q.getQuestion());
-
-				for (domain.Kuota k:kuotak){
-					Vector<Object> row = new Vector<Object>();
-
-					row.add(k.getdeskripzioa());
-					row.add(k.getpronostikoa());
-					tableModelKuotak.addRow(row);	
-				}
-				tableKuota.getColumnModel().getColumn(0).setPreferredWidth(70);
-				tableKuota.getColumnModel().getColumn(1).setPreferredWidth(25);
-			}
-		});
-		
-		scrollPaneKuotak.setViewportView(tableKuota);
-		tableModelKuotak = new DefaultTableModel(null, columnNamesKuotak);
-
-		tableKuota.setModel(tableModelKuotak);
-		tableKuota.getColumnModel().getColumn(0).setPreferredWidth(70);
-		tableKuota.getColumnModel().getColumn(1).setPreferredWidth(25);
-
 		this.getContentPane().add(scrollPaneEvents, null);
 		this.getContentPane().add(scrollPaneQueries, null);
-		this.getContentPane().add(scrollPaneKuotak, null);
+		
+		txtDeskripzioa = new JTextField();
+//		txtDeskripzioa.setText("Deskripzioa");
+		txtDeskripzioa.setBounds(345, 384, 146, 26);
+		getContentPane().add(txtDeskripzioa);
+		txtDeskripzioa.setColumns(10);
+		
+		txtPronostikoa = new JTextField();
+//		txtPronostikoa.setText("Pronostikoa");
+		txtPronostikoa.setBounds(345, 442, 146, 26);
+		getContentPane().add(txtPronostikoa);
+		txtPronostikoa.setColumns(10);
+		
+		JLabel lblDeskripzioa = new JLabel("Deskripzioa");
+		lblDeskripzioa.setBounds(130, 384, 110, 20);
+		getContentPane().add(lblDeskripzioa);
+		
+		JLabel lblPronostikoa = new JLabel("Pronostikoa");
+		lblPronostikoa.setBounds(130, 445, 110, 20);
+		getContentPane().add(lblPronostikoa);
+		
+		JButton btnAddKuota = new JButton("Add Kuota");
+		btnAddKuota.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int j=tableEvents.getSelectedRow();
+				domain.Event ev=(domain.Event) tableModelEvents.getValueAt(j,2);
+				
+				if(isExpire(ev.getEventDate())) {
+					jLabelQueries.setText("Ezin dira kuotak atzitu gertaera pasa da");
+				}
+				else {
+					int i=tableQueries.getSelectedRow();
+					domain.Question question = (domain.Question)tableModelQueries.getValueAt(i,2);
+					String deskripzioa= txtDeskripzioa.getText();
+					double pronostikoa= Double.parseDouble(txtPronostikoa.getText());
+				
+					try {
+					
+						BLFacade managerDB = MainGUI.getBusinessLogic();
+						managerDB.createKuota(question, deskripzioa, pronostikoa);
+					
+						jLabelQueries.setText("Kuota sortu da");
+					} catch (Exception e4) {
+						jLabelQueries.setText(e4.getMessage());
+					}
+				}
+			}
+		});
+		btnAddKuota.setBounds(140, 491, 115, 29);
+		getContentPane().add(btnAddKuota);
+		
+		
 
 	}
 
 	private void jButton2_actionPerformed(ActionEvent e) {
 		this.setVisible(false);
 	}
+	
+	private boolean isExpire(Date date) {
+	    
+        SimpleDateFormat sdf =  new SimpleDateFormat("MMM-dd-yyyy hh:mm:ss a"); // Jan-20-2015 1:30:55 PM
+           Date d=null;
+           Date d1=null;
+        String today=   getToday("MMM-dd-yyyy hh:mm:ss a");
+        try {
+            //System.out.println("expdate>> "+date);
+            //System.out.println("today>> "+today+"\n\n");
+            d=date;
+            try {
+				d1 = sdf.parse(today);
+			} catch (java.text.ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            if(d1.compareTo(d) <0){// not expired
+                return false;
+            }else if(d.compareTo(d1)==0){// both date are same
+                        if(d.getTime() < d1.getTime()){// not expired
+                            return false;
+                        }else if(d.getTime() == d1.getTime()){//expired
+                            return true;
+                        }else{//expired
+                            return true;
+                        }
+            }else{//expired
+                return true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();                    
+            return false;
+        }
+
+	}
+
+	public static String getToday(String format){
+		Date date = new Date();
+		return new SimpleDateFormat(format).format(date);
+	}
+
 }
