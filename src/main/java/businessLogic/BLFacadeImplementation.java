@@ -147,7 +147,7 @@ public class BLFacadeImplementation  implements BLFacade {
 		
 		return k;
     };
-    
+    @WebMethod
     public Apustua sortuApustua(double zenbatekoa,Question question, Kuota kuota, Erabiltzaile user) throws ApustuaAlreadyExist, DirurikEZ{
     	
     	DataAccess dBManager=new DataAccess();
@@ -159,13 +159,13 @@ public class BLFacadeImplementation  implements BLFacade {
  		
  		return ap;
     };
-    
+    @WebMethod
     public void updateQuestion(Integer ID, String result) throws EmaitzaExist {
     	DataAccess dBManager = new DataAccess();
     	dBManager.updateQuestion(ID, result);;
 		dBManager.close();
     }
-    
+    @WebMethod
     public void updateUser(Erabiltzaile user, double dirua) {
     	DataAccess dBManager = new DataAccess();
     	dBManager.updateUser(user, dirua);

@@ -1,10 +1,19 @@
 package domain;
 
-import javax.persistence.Entity;
+import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-public class Bezero extends Erabiltzaile {
+public class Bezero extends Erabiltzaile implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public Bezero() {
 		
 	}

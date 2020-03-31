@@ -26,7 +26,7 @@ import exceptions.DirurikEZ;
 import exceptions.EmaitzaExist;
 import exceptions.KuotaAlreadyExist;
 import exceptions.QuestionAlreadyExist;
-import exceptions.UserNotExists;
+//import exceptions.UserNotExists;
 import domain.Admin;
 import domain.Apustua;
 import domain.Bezero;

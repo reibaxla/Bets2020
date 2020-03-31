@@ -1,17 +1,27 @@
 package domain;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlID;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-public abstract class Erabiltzaile {
+public abstract class Erabiltzaile implements Serializable {
 	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String izena;
 	private String abizena;
 	private int adina;
 	
-	@Id
+	@XmlID @Id
 	private String posta;
 	private String pasahitza;
 	private double diruZorroa;
