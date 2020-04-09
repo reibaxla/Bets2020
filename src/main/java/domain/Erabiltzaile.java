@@ -12,10 +12,6 @@ import javax.xml.bind.annotation.XmlID;
 @Entity
 public abstract class Erabiltzaile implements Serializable {
 	
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private String izena;
 	private String abizena;
@@ -29,7 +25,7 @@ public abstract class Erabiltzaile implements Serializable {
 	private Vector<Apustua> apustuak = new Vector<Apustua>();
 	
 	public Erabiltzaile() {
-		
+		super();
 	}
 	
 	public Erabiltzaile(String izena, String abizena, int adina, String posta, String pasahitza) {
@@ -44,33 +40,50 @@ public abstract class Erabiltzaile implements Serializable {
 	public String getIzena() {
 		return this.izena;
 	}
+	public void setIzena(String izena) {
+		this.izena=izena;
+	}
+	
 	public String getAbizena() {
 		return this.abizena;
+	}
+	public void setAbizena(String abizena) {
+		this.abizena=abizena;
 	}
 	
 	public int getAdina() {
 		return this.adina;
 	}
+	public void setAdina(int adina) {
+		this.adina=adina;
+	}
+	
 	public String getPosta() {
 		return this.posta;
+	}
+	public void setPosta(String posta) {
+		this.posta=posta;
 	}
 	
 	public String getPasahitza() {
 		return this.pasahitza;
 	}
+	public void setPasahitza(String pasahitza) {
+		this.pasahitza=pasahitza;
+	}
+	
 	public double getDiruZorroa() {
 		return this.diruZorroa;
 	}
-	
 	public void setDiruZorroa(double dirua) {
 		this.diruZorroa=dirua;
 	}
 	
-	public Vector<Apustua> getApustu() {
+	public Vector<Apustua> getApustua() {
 		return apustuak;
 	}
 
-	public void setKuotak(Vector<Apustua> apustuak) {
+	public void setApustua(Vector<Apustua> apustuak) {
 		this.apustuak = apustuak;
 	}
 	
@@ -83,7 +96,7 @@ public abstract class Erabiltzaile implements Serializable {
 	
 	public boolean DoesApustuaExists(Question q)  {	
 		for (Kuota k:q.getKuota()){
-			for (Apustua ap:this.getApustu()){
+			for (Apustua ap:this.getApustua()){
 				if (ap.getKuota().getkuotaID()==k.getkuotaID())
 					return true;
 			}

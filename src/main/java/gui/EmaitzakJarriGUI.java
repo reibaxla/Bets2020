@@ -229,8 +229,8 @@ public class EmaitzakJarriGUI extends JFrame {
 				for (domain.Kuota k:kuotak){
 					Vector<Object> row = new Vector<Object>();
 
-					row.add(k.getdeskripzioa());
-					row.add(k.getpronostikoa());
+					row.add(k.getDeskripzioa());
+					row.add(k.getPronostikoa());
 					tableModelKuotak.addRow(row);	
 				}
 				tableKuota.getColumnModel().getColumn(0).setPreferredWidth(70);

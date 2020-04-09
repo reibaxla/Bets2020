@@ -238,8 +238,8 @@ public class ApustuEginGUI extends JFrame {
 				for (domain.Kuota k:kuotak){
 					Vector<Object> row = new Vector<Object>();
 
-					row.add(k.getdeskripzioa());
-					row.add(k.getpronostikoa());
+					row.add(k.getDeskripzioa());
+					row.add(k.getPronostikoa());
 					row.add(k);
 					tableModelKuotak.addRow(row);	
 				}

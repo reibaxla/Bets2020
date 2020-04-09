@@ -86,7 +86,7 @@ public class index extends JFrame {
 					Locale.setDefault(new Locale(c.getLocale()));
 					
 					System.out.println("Locale: "+Locale.getDefault());
-					erreg a = new erreg();
+					ErregistratuGUI a = new ErregistratuGUI();
 					a.setVisible(true);
 					
 					
@@ -141,7 +141,7 @@ public class index extends JFrame {
 					Locale.setDefault(new Locale(c.getLocale()));
 					
 					System.out.println("Locale: "+Locale.getDefault());
-					login a = new login();
+					LoginGUI a = new LoginGUI();
 					a.setVisible(true);
 					
 					try {

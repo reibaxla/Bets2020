@@ -15,10 +15,6 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @Entity
 public class Kuota implements Serializable {
 	
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	@XmlID @Id
 	@XmlJavaTypeAdapter(IntegerAdapter.class)
@@ -29,6 +25,9 @@ public class Kuota implements Serializable {
 	@XmlIDREF
 	private Question question;
 	
+	public Kuota() {
+		super();
+	}
 	public Kuota(String deskripzioa, double pronostikoa2, Question question) {
 		super();
 		this.pronostikoa=pronostikoa2;
@@ -43,16 +42,32 @@ public class Kuota implements Serializable {
 		
 	}
 	
-	public int getkuotaID() {
+	public Integer getkuotaID() {
 		return this.kuotaID;
 	}
-	public String getdeskripzioa() {
+	public void setkuotaID(Integer kuotaID) {
+		this.kuotaID=kuotaID;
+	}
+	
+	public String getDeskripzioa() {
 		return this.deskripzioa;
 	}
-	
-	public double getpronostikoa() {
-		return this.pronostikoa;
+	public void setDeskripzioa(String deskripzioa) {
+		this.deskripzioa=deskripzioa;
 	}
 	
+	public double getPronostikoa() {
+		return this.pronostikoa;
+	}
+	public void setPronostikoa(double pronostikoa) {
+		this.pronostikoa=pronostikoa;
+	}
+	
+	public Question getQuestion() {
+		return this.question;
+	}
+	public void setQuestion(Question question) {
+		this.question=question;
+	}
 
 }

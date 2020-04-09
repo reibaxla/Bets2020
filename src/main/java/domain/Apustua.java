@@ -15,23 +15,20 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @Entity
 public class Apustua implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	@XmlID @Id
 	@XmlJavaTypeAdapter(IntegerAdapter.class)
 	@GeneratedValue
 	private Integer apustuID;
 	private double zenbatekoa;
-	private boolean Irabazi;
+	private boolean irabazi;
 	@XmlIDREF
 	private Kuota kuota;
 	@XmlIDREF
 	private Erabiltzaile user;
 	
 	public Apustua() {
-		
+		super();
 	}
 	
 	public Apustua(double zenbatekoa, Kuota kuota, Erabiltzaile user) {
@@ -51,28 +48,42 @@ public class Apustua implements Serializable {
 		super();
 		this.apustuID=apustuID;
 		this.zenbatekoa=zenbatekoa;
-		this.Irabazi=Irabazi;
+		this.irabazi=Irabazi;
 	}
 	
-	public int getApustuID() {
+	public Integer getApustuID() {
 		return this.getApustuID();
 	}
+	public void setApustuID(Integer apustuID) {
+		this.apustuID=apustuID;
+	}
+	
 	public double getZenbatekoa() {
 		return this.zenbatekoa;
+	}
+	public void setZenbatekoa(double zenbatekoa) {
+		this.zenbatekoa=zenbatekoa;
 	}
 	
 	public Kuota getKuota() {
 		return this.kuota;
 	}
+	public void setKuota(Kuota kuota) {
+		this.kuota=kuota;
+	}
+	
 	public Erabiltzaile getUser() {
 		return this.user;
 	}
+	public void setUser(Erabiltzaile user) {
+		this.user=user;
+	}
 	
 	public boolean getIrabazi() {
-		return this.Irabazi;
+		return this.irabazi;
 	}
-	public void setIrabazle(boolean irabazi) {
-		this.Irabazi=irabazi;
+	public void setIrabazi(boolean irabazi) {
+		this.irabazi=irabazi;
 	}
 	
 }

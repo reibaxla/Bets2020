@@ -21,7 +21,7 @@ import domain.Admin;
 import domain.Bezero;
 import domain.Erabiltzaile;
 
-public class login extends JFrame {
+public class LoginGUI extends JFrame {
 
 	/**
 	 * 
@@ -39,7 +39,7 @@ public class login extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					login frame = new login();
+					LoginGUI frame = new LoginGUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,7 +51,7 @@ public class login extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public login() {
+	public LoginGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -129,7 +129,7 @@ public class login extends JFrame {
 		}
 	}
 	public void erreg_actionPerformed(ActionEvent e) {
-			erreg a = new erreg();
+			ErregistratuGUI a = new ErregistratuGUI();
 			a.setVisible(true);
 			this.setVisible(false);
 	}

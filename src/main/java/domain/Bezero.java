@@ -10,9 +10,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 @Entity
 public class Bezero extends Erabiltzaile implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	public Bezero() {
 		

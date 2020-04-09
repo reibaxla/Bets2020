@@ -10,10 +10,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 @Entity
 public class Admin extends Erabiltzaile implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	public Admin(){
+		super();
+		
+	}
 
 	public Admin(String izena, String abizena, int adina, String posta, String pasahitza) {
 		super(izena, abizena, adina,posta, pasahitza);

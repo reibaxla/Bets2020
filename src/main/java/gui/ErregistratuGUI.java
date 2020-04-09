@@ -19,7 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class erreg extends JFrame {
+public class ErregistratuGUI extends JFrame {
 
 	/**
 	 * 
@@ -42,7 +42,7 @@ public class erreg extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					erreg frame = new erreg();
+					ErregistratuGUI frame = new ErregistratuGUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,7 +54,7 @@ public class erreg extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public erreg() {
+	public ErregistratuGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 527, 371);
 		contentPane = new JPanel();
@@ -177,7 +177,7 @@ public class erreg extends JFrame {
 		else {
 			zenb= erregistroa.storeUser(newUser);
 			if (zenb==0) {
-				login frame = new login();
+				LoginGUI frame = new LoginGUI();
 				frame.setVisible(true);
 				this.setVisible(false);
 			}
