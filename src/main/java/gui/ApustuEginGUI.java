@@ -1,4 +1,4 @@
-package gui;
+ package gui;
 
 import businessLogic.BLFacade;
 import configuration.UtilDate;
@@ -25,6 +25,8 @@ public class ApustuEginGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	private Erabiltzaile logeatuta;
+	private Vector<Kuota> kn = new Vector<Kuota>();
+	private Date firstEventDate=null;
 
 	private final JLabel jLabelEventDate = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("EventDate"));
 	private final JLabel jLabelQueries = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Queries")); 
@@ -38,14 +40,17 @@ public class ApustuEginGUI extends JFrame {
 	private JScrollPane scrollPaneEvents = new JScrollPane();
 	private JScrollPane scrollPaneQueries = new JScrollPane();
 	private JScrollPane scrollPaneKuotak = new JScrollPane();
+	private JScrollPane scrollPaneApustua = new JScrollPane();
 
 	private JTable tableEvents= new JTable();
 	private JTable tableQueries = new JTable();
-	private final JTable tableKuota = new JTable();
+	private JTable tableKuota = new JTable();
+	private JTable tableApustu = new JTable();
 
 	private DefaultTableModel tableModelEvents;
 	private DefaultTableModel tableModelQueries;
 	private DefaultTableModel tableModelKuotak;
+	private DefaultTableModel tableModelApustu;
 
 	
 	private String[] columnNamesEvents = new String[] {
@@ -64,15 +69,23 @@ public class ApustuEginGUI extends JFrame {
 			"Kuota", 
 
 	};
+	
+	private String[] columnNamesApustu = new String[] {
+			"Kuota", 
+			"Pronostikoa", 
+
+	};
+	
 	private final JLabel lblZenbatekoa = new JLabel("Apostua zenbatekoa:");
 	private final JButton btnApostuaEgin = new JButton();
 	private final JTextField textZenbatekoa = new JTextField();
 	private final JLabel label = new JLabel("€");
+	private final JButton btnGehituApostua = new JButton("Gehitu apostura");
 
 	public ApustuEginGUI(Erabiltzaile logeatuta)
 	{
 		this.logeatuta=logeatuta;
-		textZenbatekoa.setBounds(226, 375, 146, 26);
+		textZenbatekoa.setBounds(846, 394, 146, 26);
 		textZenbatekoa.setColumns(10);
 		try
 		{
@@ -89,7 +102,7 @@ public class ApustuEginGUI extends JFrame {
 	{
 
 		this.getContentPane().setLayout(null);
-		this.setSize(new Dimension(779, 505));
+		this.setSize(new Dimension(1199, 505));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("QueryQueries"));
 
 		jLabelEventDate.setBounds(new Rectangle(40, 15, 140, 25));
@@ -100,7 +113,7 @@ public class ApustuEginGUI extends JFrame {
 		this.getContentPane().add(jLabelQueries);
 		this.getContentPane().add(jLabelEvents);
 
-		jButtonClose.setBounds(new Rectangle(377, 416, 130, 30));
+		jButtonClose.setBounds(new Rectangle(393, 392, 130, 30));
 
 		jButtonClose.addActionListener(new ActionListener()
 		{
@@ -173,6 +186,7 @@ public class ApustuEginGUI extends JFrame {
 		scrollPaneEvents.setBounds(new Rectangle(292, 50, 346, 150));
 		scrollPaneQueries.setBounds(new Rectangle(40, 246, 406, 116));
 		scrollPaneKuotak.setBounds(new Rectangle(446, 246, 295, 116));
+		scrollPaneApustua.setBounds(new Rectangle(799, 50, 346, 312));
 
 		tableEvents.addMouseListener(new MouseAdapter() {
 			@Override
@@ -247,19 +261,7 @@ public class ApustuEginGUI extends JFrame {
 				tableKuota.getColumnModel().removeColumn(tableKuota.getColumnModel().getColumn(2));
 			}
 		});
-		
-		tableKuota.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
 				
-				lblZenbatekoa.setVisible(true);
-				textZenbatekoa.setVisible(true);
-				label.setVisible(true);
-				btnApostuaEgin.setEnabled(true);			
-			}
-		});
-		
 		scrollPaneKuotak.setViewportView(tableKuota);
 		tableModelKuotak = new DefaultTableModel(null, columnNamesKuotak);
 
@@ -270,50 +272,46 @@ public class ApustuEginGUI extends JFrame {
 		this.getContentPane().add(scrollPaneEvents, null);
 		this.getContentPane().add(scrollPaneQueries, null);
 		this.getContentPane().add(scrollPaneKuotak, null);
-		lblZenbatekoa.setBounds(50, 378, 149, 20);
+		this.getContentPane().add(scrollPaneApustua, null);
+		lblZenbatekoa.setBounds(654, 397, 149, 20);
 		
 		getContentPane().add(lblZenbatekoa);
 		btnApostuaEgin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int i=tableKuota.getSelectedRow();
-				Kuota k=(Kuota) tableModelKuotak.getValueAt(i,2);
+//				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				Date data = new Date();
 				
 				int y=tableQueries.getSelectedRow();
 				Question q=(Question) tableModelQueries.getValueAt(y,2);
 				
-				int j=tableEvents.getSelectedRow();
-				domain.Event ev=(domain.Event) tableModelEvents.getValueAt(j,2);
-				
 				double aZ = Double.parseDouble(textZenbatekoa.getText());
 				
 				if (textZenbatekoa.getText().length()>0 && aZ<= q.getBetMinimum()) {
-					jLabelQueries.setText("Ez da apustu minimoa betetzen Min: 1€");
+					jLabelQueries.setText("Ez da apustu minimoa betetzen Min: " + q.getBetMinimum() );
 				} else
-					if(isExpire(ev.getEventDate())) {
-						jLabelQueries.setText("Ezin da gertaera honetan apustu egin");
-					}
-					else {
-						try {
-							BLFacade b = MainGUI.getBusinessLogic();
-							Apustua ap=b.sortuApustua(aZ, q, k, logeatuta);
-							if(ap!=null)
-							jLabelQueries.setText("Apustua ongi egin da. " + logeatuta.getPosta() + " kontuarekin "+ aZ+" €");
-							else {
-								jLabelQueries.setText("Arazo bat egon da apustuarekin");
+					try {
+						BLFacade b = MainGUI.getBusinessLogic();
+						Apustua ap=b.sortuApustua(aZ, kn, logeatuta, data, firstEventDate);
+						if(ap!=null) {
+						jLabelQueries.setText("Apustua ongi egin da. " + logeatuta.getPosta() + " kontuarekin "+ aZ+" €");
+						firstEventDate=null;
+						kn.removeAllElements();
+						}
+						else {
+							jLabelQueries.setText("Arazo bat egon da apustuarekin");
 							}
 						}catch(Exception e4){
 							jLabelQueries.setText(e4.getMessage());
 						}	
-					}
 			}
 		});
 		btnApostuaEgin.setText(ResourceBundle.getBundle("Etiquetas").getString("ApustuEginGUI.btnApostuaEgin.text")); //$NON-NLS-1$ //$NON-NLS-2$
-		btnApostuaEgin.setBounds(189, 417, 140, 29);
+		btnApostuaEgin.setBounds(1022, 393, 140, 29);
 		
 		getContentPane().add(btnApostuaEgin);
 		
 		getContentPane().add(textZenbatekoa);
-		label.setBounds(377, 377, 69, 20);
+		label.setBounds(995, 397, 69, 20);
 		
 		getContentPane().add(label);
 		
@@ -321,7 +319,74 @@ public class ApustuEginGUI extends JFrame {
 		textZenbatekoa.setVisible(false);
 		label.setVisible(false);
 		btnApostuaEgin.setEnabled(false);
+		
+		
+		btnGehituApostua.setBounds(158, 393, 173, 29);
+		getContentPane().add(btnGehituApostua);
+		
+		btnGehituApostua.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int i=tableKuota.getSelectedRow();
+				Kuota k=(Kuota) tableModelKuotak.getValueAt(i,2);
+				
+				int j=tableEvents.getSelectedRow();
+				domain.Event ev=(domain.Event) tableModelEvents.getValueAt(j,2);
+				
+				if(isExpire(ev.getEventDate())) {
+					jLabelQueries.setText("Ezin da gertaera honetan apustu egin");
+				}
+//				else if(logeatuta.DoesApustuaExists(q)) {
+//					jLabelQueries.setText("Apustua existitzen da");
 
+				else {
+//				gehitu kuota bektorera eta idatzi apustu tablan	
+					kn.add(k);
+					btnApostuaEgin.setEnabled(true);
+					if(firstEventDate==null) firstEventDate=ev.getEventDate();
+					else if(firstEventDate.compareTo(ev.getEventDate())>0) firstEventDate =ev.getEventDate();
+					
+					
+					tableModelApustu.setDataVector(null, columnNamesApustu);
+					tableModelApustu.setColumnCount(3);
+
+					if (kn.isEmpty())
+						jLabelQueries.setText("Ez dago aposturik");
+					else 
+						jLabelQueries.setText("Apustua gorde da");
+
+					for (domain.Kuota kuota: kn){
+						Vector<Object> row = new Vector<Object>();
+
+						row.add(kuota.getDeskripzioa());
+						row.add(kuota.getPronostikoa());
+						row.add(kuota);
+						tableModelApustu.addRow(row);	
+					}
+					tableApustu.getColumnModel().getColumn(0).setPreferredWidth(70);
+					tableApustu.getColumnModel().getColumn(1).setPreferredWidth(25);
+					tableApustu.getColumnModel().removeColumn(tableApustu.getColumnModel().getColumn(2));
+				}
+			}
+		});
+		tableKuota.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				lblZenbatekoa.setVisible(true);
+				textZenbatekoa.setVisible(true);
+				label.setVisible(true);
+				btnGehituApostua.setEnabled(true);			
+			}
+		});
+		scrollPaneApustua.setViewportView(tableApustu);
+		tableModelApustu = new DefaultTableModel(null, columnNamesApustu);
+
+		tableApustu.setModel(tableModelApustu);
+		tableApustu.getColumnModel().getColumn(0).setPreferredWidth(70);
+		tableApustu.getColumnModel().getColumn(1).setPreferredWidth(25);
+		
 	}
 
 	private void jButton2_actionPerformed(ActionEvent e) {

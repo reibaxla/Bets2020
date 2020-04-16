@@ -19,7 +19,7 @@ public class Kuota implements Serializable {
 	@XmlID @Id
 	@XmlJavaTypeAdapter(IntegerAdapter.class)
 	@GeneratedValue
-	private Integer kuotaID;
+	private Integer kuotaId;
 	private double pronostikoa;
 	private String deskripzioa;
 	@XmlIDREF
@@ -34,19 +34,19 @@ public class Kuota implements Serializable {
 		this.deskripzioa=deskripzioa;
 	}
 	
-	public Kuota(Integer kuotaID, String deskripzioa, double pronostikoa, Question question) {
+	public Kuota(Integer kuotaId, String deskripzioa, double pronostikoa, Question question) {
 		super();
-		this.kuotaID=kuotaID;
+		this.kuotaId=kuotaId;
 		this.pronostikoa=pronostikoa;
 		this.deskripzioa=deskripzioa;
 		
 	}
 	
 	public Integer getkuotaID() {
-		return this.kuotaID;
+		return this.kuotaId;
 	}
-	public void setkuotaID(Integer kuotaID) {
-		this.kuotaID=kuotaID;
+	public void setkuotaID(Integer kuotaId) {
+		this.kuotaId=kuotaId;
 	}
 	
 	public String getDeskripzioa() {

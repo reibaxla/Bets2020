@@ -1,6 +1,7 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Vector;
 
 import javax.persistence.*;
@@ -21,8 +22,10 @@ public abstract class Erabiltzaile implements Serializable {
 	private String posta;
 	private String pasahitza;
 	private double diruZorroa;
-	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private Vector<Apustua> apustuak = new Vector<Apustua>();
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	private Vector<Mugimendu> mugimenduak = new Vector<Mugimendu>();
 	
 	public Erabiltzaile() {
 		super();
@@ -80,28 +83,51 @@ public abstract class Erabiltzaile implements Serializable {
 	}
 	
 	public Vector<Apustua> getApustua() {
-		return apustuak;
+		return this.apustuak;
 	}
 
 	public void setApustua(Vector<Apustua> apustuak) {
 		this.apustuak = apustuak;
 	}
 	
-	public Apustua addApustu(double zenbatekoa, Kuota kuota)  {
+	public Apustua addApustu(double zenbatekoa, Vector<Kuota> kuota)  {
         Apustua ap=new Apustua(zenbatekoa, kuota, this);
-        apustuak.add(ap);
+        this.apustuak.add(ap);
         return ap;
 	}
 
 	
-	public boolean DoesApustuaExists(Question q)  {	
-		for (Kuota k:q.getKuota()){
+/*	public boolean DoesApustuaExists(Question q)  {	
+		for (Kuota k: q.getKuota()){
 			for (Apustua ap:this.getApustua()){
-				if (ap.getKuota().getkuotaID()==k.getkuotaID())
-					return true;
+				for (Kuota kn:ap.getKuota()){
+					if (kn.getkuotaID()==k.getkuotaID())
+						return true;
+				}
 			}
 		}
 		return false;
 	}
-		
+	*/
+	public Vector<Mugimendu> getMugimeduak() {
+		return this.mugimenduak;
+	}
+
+	public void setMugimenduak(Vector<Mugimendu> mugimenduak) {
+		this.mugimenduak = mugimenduak;
+	}
+	
+	public Mugimendu addMugimendu(Object mota, double diruMug, Date data, Date firstEventDate)  {
+        Mugimendu mu=new Mugimendu(mota, diruMug, data, firstEventDate, this);
+        this.mugimenduak.add(mu);
+        return mu;
+	}
+	
+	public boolean remApustu(Apustua ap) {
+		return this.apustuak.remove(ap);
+	}
+	public boolean remMug(Mugimendu mug) {
+		return this.mugimenduak.remove(mug);
+	}
+	
 }

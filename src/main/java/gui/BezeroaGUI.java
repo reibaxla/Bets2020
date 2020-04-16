@@ -68,7 +68,7 @@ public class BezeroaGUI extends JFrame {
 
 	private void initialize() {
 		// this.setSize(271, 295);
-		this.setSize(495, 290);
+		this.setSize(495, 344);
 		this.setContentPane(getJContentPane());
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainTitle"));
 	}
@@ -81,6 +81,16 @@ public class BezeroaGUI extends JFrame {
 			jContentPane.add(getBoton3());
 			jContentPane.add(getPanel());
 			jContentPane.add(getBtnDiruaSartu());
+			
+			JButton btnMugIk = new JButton(ResourceBundle.getBundle("Etiquetas").getString("BezeroaGUI.btnNewButton.text")); //$NON-NLS-1$ //$NON-NLS-2$
+			btnMugIk.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					JFrame a = new MugimenduakIkusiGUI(logeatuta);
+					a.setVisible(true);
+				}
+			});
+			btnMugIk.setBounds(0, 191, 481, 61);
+			jContentPane.add(btnMugIk);
 		}
 		return jContentPane;
 	}
@@ -155,7 +165,7 @@ public class BezeroaGUI extends JFrame {
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
-			panel.setBounds(0, 187, 481, 44);
+			panel.setBounds(0, 252, 481, 44);
 			panel.add(getRdbtnNewRadioButton_1());
 			panel.add(getRdbtnNewRadioButton_2());
 			panel.add(getRdbtnNewRadioButton());

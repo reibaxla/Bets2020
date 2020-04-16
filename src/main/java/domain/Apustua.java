@@ -1,6 +1,7 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.Vector;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,11 +20,11 @@ public class Apustua implements Serializable {
 	@XmlID @Id
 	@XmlJavaTypeAdapter(IntegerAdapter.class)
 	@GeneratedValue
-	private Integer apustuID;
+	private Integer apustuId;
 	private double zenbatekoa;
 	private boolean irabazi;
 	@XmlIDREF
-	private Kuota kuota;
+	private Vector<Kuota> kuota= new Vector<Kuota>();
 	@XmlIDREF
 	private Erabiltzaile user;
 	
@@ -31,31 +32,31 @@ public class Apustua implements Serializable {
 		super();
 	}
 	
-	public Apustua(double zenbatekoa, Kuota kuota, Erabiltzaile user) {
+	public Apustua(double zenbatekoa, Vector<Kuota> kuota, Erabiltzaile user) {
 		super();
 		this.zenbatekoa=zenbatekoa;
 		this.kuota=kuota;
 	}
 	
-	public Apustua(Integer apustuID, double zenbatekoa, Kuota kuota, Erabiltzaile user) {
+	public Apustua(Integer apustuId, double zenbatekoa, Vector<Kuota> kuota, Erabiltzaile user) {
 		super();
-		this.apustuID=apustuID;
+		this.apustuId=apustuId;
 		this.zenbatekoa=zenbatekoa;
 		this.kuota=kuota;
 	}
 	
-	public Apustua(Integer apustuID, double zenbatekoa, Kuota kuota, Erabiltzaile user, boolean Irabazi) {
+	public Apustua(Integer apustuId, double zenbatekoa, Vector<Kuota> kuota, Erabiltzaile user, boolean Irabazi) {
 		super();
-		this.apustuID=apustuID;
+		this.apustuId=apustuId;
 		this.zenbatekoa=zenbatekoa;
 		this.irabazi=Irabazi;
 	}
 	
-	public Integer getApustuID() {
-		return this.getApustuID();
+	public Integer getApustuId() {
+		return this.apustuId;
 	}
-	public void setApustuID(Integer apustuID) {
-		this.apustuID=apustuID;
+	public void setApustuId(Integer apustuId) {
+		this.apustuId=apustuId;
 	}
 	
 	public double getZenbatekoa() {
@@ -65,10 +66,10 @@ public class Apustua implements Serializable {
 		this.zenbatekoa=zenbatekoa;
 	}
 	
-	public Kuota getKuota() {
+	public Vector<Kuota> getKuota() {
 		return this.kuota;
 	}
-	public void setKuota(Kuota kuota) {
+	public void setKuota(Vector<Kuota> kuota) {
 		this.kuota=kuota;
 	}
 	

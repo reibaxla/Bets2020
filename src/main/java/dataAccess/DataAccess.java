@@ -20,8 +20,8 @@ import configuration.ConfigXML;
 import configuration.UtilDate;
 import domain.Event;
 import domain.Kuota;
+import domain.Mugimendu;
 import domain.Question;
-import exceptions.ApustuaAlreadyExist;
 import exceptions.DirurikEZ;
 import exceptions.EmaitzaExist;
 import exceptions.KuotaAlreadyExist;
@@ -330,36 +330,24 @@ public class DataAccess  {
 				
 			db.getTransaction().begin();
 			Kuota k = q.addKuota(deskripzioa, pronostikoa);
-			//db.persist(q);
-			db.persist(q); // db.persist(q) not required when CascadeType.PERSIST is added in questions property of Event class
-							// @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 			db.getTransaction().commit();
 			return k;
 			
 	}
 	
-	public Apustua sortuApustua(double zenbatekoa, Question qu, Kuota kuota, Erabiltzaile user) throws ApustuaAlreadyExist, DirurikEZ {
-					
+	public Apustua sortuApustua(double zenbatekoa, Vector<Kuota> kuota, Erabiltzaile user, Date data, Date firstEventDate) throws DirurikEZ {
+		
+		Erabiltzaile us = db.find(Erabiltzaile.class, user.getPosta());
+//		for (Question q:qN)
+//		if (us.DoesApustuaExists(q)) throw new ApustuaAlreadyExist("ErrorApustuaAlreadyExist");
+		
+		if(us.getDiruZorroa()<zenbatekoa)throw new DirurikEZ("Ez duzu diru nahikorik");
+		
 		db.getTransaction().begin();
-		
-		TypedQuery<Erabiltzaile> query = db.createQuery("SELECT u FROM Erabiltzaile u WHERE u.posta=?1", Erabiltzaile.class);
-		query.setParameter(1, user.getPosta());
-		Erabiltzaile us = query.getSingleResult();
-		
-		TypedQuery<Kuota> query1 = db.createQuery("SELECT k FROM Kuota k WHERE k.kuotaID=?1", Kuota.class);
-		query1.setParameter(1, kuota.getkuotaID());
-		Kuota k = query1.getSingleResult();
-		
-		if (us.DoesApustuaExists(qu)) throw new ApustuaAlreadyExist("ErrorApustuaAlreadyExist");
-		else if(us.getDiruZorroa()<zenbatekoa)throw new DirurikEZ("Ez duzu diru nahikorik");
-		
-		Apustua ap = us.addApustu(zenbatekoa, k);
+		Apustua ap = us.addApustu(zenbatekoa, kuota);
+		us.addMugimendu(ap, zenbatekoa, data, firstEventDate);
 		zenbatekoa=us.getDiruZorroa()-zenbatekoa;
 		us.setDiruZorroa(zenbatekoa);
-					
-		//db.persist(q);
-		db.persist(us); // db.persist(q) not required when CascadeType.PERSIST is added in questions property of Event class
-						// @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 		db.getTransaction().commit();
 		return ap;
 			
@@ -368,30 +356,53 @@ public class DataAccess  {
 	public void updateQuestion(Integer ID, String result) throws EmaitzaExist {
 		
 		db.getTransaction().begin();
-		TypedQuery<Question> query = db.createQuery("SELECT q FROM Question q WHERE q.questionNumber=?1", Question.class);
-		query.setParameter(1, ID);
-		Question q = query.getSingleResult();
+		Question q = db.find(Question.class, ID);
 		if(q.getResult().compareTo(result)==0)throw new EmaitzaExist("Emaitza gordeta dago jada");
 		q.setResult(result);
-		db.persist(q);
 		db.getTransaction().commit();
 		System.out.println(ID + " galdera eguneratua izan da.");
 
 	}
 	
-	public void updateUser(Erabiltzaile user, double dirua) {
+	public void updateUser(Erabiltzaile user, double dirua, Date data) {
+		
+		Erabiltzaile us = db.find(Erabiltzaile.class, user.getPosta());
 		
 		db.getTransaction().begin();
-		
-		TypedQuery<Erabiltzaile> query = db.createQuery("SELECT u FROM Erabiltzaile u WHERE u.posta=?1", Erabiltzaile.class);
-		query.setParameter(1, user.getPosta());
-		Erabiltzaile us = query.getSingleResult();
-		dirua+=us.getDiruZorroa();
-		us.setDiruZorroa(dirua);
-		db.persist(us);
+		us.setDiruZorroa(dirua+us.getDiruZorroa());
+		us.addMugimendu("Diru sarrera", dirua, data, null);
 		db.getTransaction().commit();
 		System.out.println(user.getPosta() + " erabiltzailea eguneratua izan da."+dirua);
 
+	}
+	
+	public	boolean	removeApustua (Apustua ap, Mugimendu mu, Erabiltzaile user){
+		boolean	em=true;
+		try	{
+			db.getTransaction().begin();
+			Apustua	c=db.find(Apustua.class, ap.getApustuId());
+			Mugimendu d = db.find(Mugimendu.class, mu.getMugId());
+			Erabiltzaile us = db.find(Erabiltzaile.class, user.getPosta());
+			us.setDiruZorroa(c.getZenbatekoa()+us.getDiruZorroa());
+			us.remApustu(c);
+			us.remMug(d);
+			db.remove(c);
+			db.remove(d);
+			db.getTransaction().commit();
+			System.out.println("object	removed	"+ ap.getApustuId());
+			}catch(Exception e){
+				e.printStackTrace();
+				em=false;
+			}
+
+		return	em;
+		}	
+	
+	public Erabiltzaile getUser(Erabiltzaile user) {
+		db.getTransaction().begin();
+    	Erabiltzaile em = db.find(Erabiltzaile.class, user.getPosta());
+    	db.getTransaction().commit();
+		return em;
 	}
 		
 	public void close(){

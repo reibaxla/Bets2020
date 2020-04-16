@@ -14,7 +14,7 @@ import domain.Apustua;
 import domain.Erabiltzaile;
 import domain.Event;
 import domain.Kuota;
-import exceptions.ApustuaAlreadyExist;
+import domain.Mugimendu;
 import exceptions.DirurikEZ;
 import exceptions.EmaitzaExist;
 import exceptions.EventFinished;
@@ -148,12 +148,12 @@ public class BLFacadeImplementation  implements BLFacade {
 		return k;
     };
     @WebMethod
-    public Apustua sortuApustua(double zenbatekoa,Question question, Kuota kuota, Erabiltzaile user) throws ApustuaAlreadyExist, DirurikEZ{
+    public Apustua sortuApustua(double zenbatekoa, Vector<Kuota> kuota, Erabiltzaile user, Date data, Date firstEventDate) throws DirurikEZ{
     	
     	DataAccess dBManager=new DataAccess();
     	Apustua ap=null;
  		
- 		 ap=dBManager.sortuApustua(zenbatekoa, question, kuota, user);
+ 		 ap=dBManager.sortuApustua(zenbatekoa, kuota, user, data, firstEventDate);
 
  		dBManager.close();
  		
@@ -166,11 +166,26 @@ public class BLFacadeImplementation  implements BLFacade {
 		dBManager.close();
     }
     @WebMethod
-    public void updateUser(Erabiltzaile user, double dirua) {
+    public void updateUser(Erabiltzaile user, double dirua, Date data) {
     	DataAccess dBManager = new DataAccess();
-    	dBManager.updateUser(user, dirua);
+    	dBManager.updateUser(user, dirua, data);
 		dBManager.close();
     }
 
+    @WebMethod
+    public	boolean	removeApustua (Apustua ap, Mugimendu mu, Erabiltzaile user) {
+    	DataAccess dBManager = new DataAccess();
+    	boolean em = dBManager.removeApustua(ap, mu, user);
+		dBManager.close();
+		return em;
+    }
+
+
+	public Erabiltzaile getUser(Erabiltzaile user) {
+		DataAccess dBManager = new DataAccess();
+    	Erabiltzaile em = dBManager.getUser(user);
+		dBManager.close();
+		return em;
+	}
 }
 

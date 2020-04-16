@@ -48,6 +48,7 @@ public class MainGUI extends JFrame {
 	private JRadioButton rdbtnNewRadioButton_2;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JButton jButtonCreateEvent;
+	private JButton btnMugIkus;
 	
 	/**
 	 * This is the default constructor
@@ -83,7 +84,7 @@ public class MainGUI extends JFrame {
 	 */
 	private void initialize() {
 		// this.setSize(271, 295);
-		this.setSize(537, 301);
+		this.setSize(537, 345);
 		this.setContentPane(getJContentPane());
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainTitle"));
 	}
@@ -134,6 +135,7 @@ public class MainGUI extends JFrame {
 			});
 			btnDiruaSartu.setBounds(31, 137, 211, 50);
 			jContentPane.add(btnDiruaSartu);
+			jContentPane.add(getBtnMugIkus());
 		}
 		return jContentPane;
 	}
@@ -194,7 +196,7 @@ public class MainGUI extends JFrame {
 	private JRadioButton getRdbtnNewRadioButton() {
 		if (rdbtnNewRadioButton == null) {
 			rdbtnNewRadioButton = new JRadioButton("English");
-			rdbtnNewRadioButton.setBounds(100, 208, 88, 25);
+			rdbtnNewRadioButton.setBounds(83, 252, 88, 25);
 			rdbtnNewRadioButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					Locale.setDefault(new Locale("en"));
@@ -208,7 +210,7 @@ public class MainGUI extends JFrame {
 	private JRadioButton getRdbtnNewRadioButton_1() {
 		if (rdbtnNewRadioButton_1 == null) {
 			rdbtnNewRadioButton_1 = new JRadioButton("Euskara");
-			rdbtnNewRadioButton_1.setBounds(198, 199, 87, 43);
+			rdbtnNewRadioButton_1.setBounds(178, 243, 87, 43);
 			rdbtnNewRadioButton_1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					Locale.setDefault(new Locale("eus"));
@@ -222,7 +224,7 @@ public class MainGUI extends JFrame {
 	private JRadioButton getRdbtnNewRadioButton_2() {
 		if (rdbtnNewRadioButton_2 == null) {
 			rdbtnNewRadioButton_2 = new JRadioButton("Castellano");
-			rdbtnNewRadioButton_2.setBounds(303, 206, 105, 34);
+			rdbtnNewRadioButton_2.setBounds(282, 250, 105, 34);
 			rdbtnNewRadioButton_2.setVerticalAlignment(SwingConstants.TOP);
 			rdbtnNewRadioButton_2.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -258,5 +260,18 @@ public class MainGUI extends JFrame {
 		return jButtonCreateEvent;
 	}
 	
+	private JButton getBtnMugIkus() {
+		if (btnMugIkus == null) {
+			btnMugIkus = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.btnNewButton.text")); //$NON-NLS-1$ //$NON-NLS-2$
+			btnMugIkus.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					JFrame a = new MugimenduakIkusiGUI(logeatuta);
+					a.setVisible(true);
+				}
+			});
+			btnMugIkus.setBounds(31, 186, 211, 45);
+		}
+		return btnMugIkus;
+	}
 } // @jve:decl-index=0:visual-constraint="0,0"
 

@@ -13,7 +13,7 @@ import domain.Apustua;
 import domain.Erabiltzaile;
 import domain.Event;
 import domain.Kuota;
-import exceptions.ApustuaAlreadyExist;
+import domain.Mugimendu;
 import exceptions.DirurikEZ;
 import exceptions.EmaitzaExist;
 import exceptions.EventFinished;
@@ -74,10 +74,14 @@ public interface BLFacade  {
 
 	@WebMethod Kuota createKuota(Question question, String deskripzioa, double pronostikoa) throws KuotaAlreadyExist;
 	
-	@WebMethod Apustua sortuApustua(double zenbatekoa, Question question, Kuota kuota, Erabiltzaile user) throws ApustuaAlreadyExist, DirurikEZ;
+	@WebMethod Apustua sortuApustua(double zenbatekoa, Vector<Kuota> kuota, Erabiltzaile user, Date data, Date firstEventDate) throws DirurikEZ;
 	
 	@WebMethod public void updateQuestion(Integer ID, String result) throws EmaitzaExist;
 	
-	@WebMethod public void updateUser(Erabiltzaile user, double dirua);
+	@WebMethod public void updateUser(Erabiltzaile user, double dirua, Date data);
+	
+	@WebMethod public boolean removeApustua (Apustua ap, Mugimendu mu, Erabiltzaile user);
+	
+	@WebMethod public Erabiltzaile getUser(Erabiltzaile user);
 	
 }

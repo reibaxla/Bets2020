@@ -15,6 +15,7 @@ import domain.Erabiltzaile;
 import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
 public class diruaGUI extends JFrame {
 	/**
@@ -128,7 +129,7 @@ public class diruaGUI extends JFrame {
 								
 				if(dirukant.length()>0) { //Zerbait sartu da
 					double quantity = Double.parseDouble(textFieldDiru.getText());
-					if (quantity<=10 || quantity>=500) {
+					if (quantity<10.00 || quantity>500.00) {
 						jLabelMezu.setText("");
 						jLabelErrore.setText("Sartu duzun kantitatea ez da 10 eta 500 artekoa");
 					}else {
@@ -144,9 +145,11 @@ public class diruaGUI extends JFrame {
 								int urte1 = Integer.parseInt(urte);
 								if (hila1> 0 && hila1<= 12 && urte1>=20) {
 									if (zenb.length()==3) {
+//										DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+										Date data = new Date();
 										
 										BLFacade b = MainGUI.getBusinessLogic();
-										b.updateUser(logeatuta, quantity);
+										b.updateUser(logeatuta, quantity, data);
 											
 										jLabelErrore.setText("");
 										jLabelMezu.setText("Dirua sartu da.");

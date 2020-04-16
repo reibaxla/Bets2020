@@ -79,170 +79,14 @@ public class index extends JFrame {
 		sartuButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (erregistratu.isSelected()) {
-					ConfigXML c=ConfigXML.getInstance();
-					
-					System.out.println(c.getLocale());
-					
-					Locale.setDefault(new Locale(c.getLocale()));
-					
-					System.out.println("Locale: "+Locale.getDefault());
-					ErregistratuGUI a = new ErregistratuGUI();
-					a.setVisible(true);
-					
-					
-					try {
-						
-						BLFacade appFacadeInterface;
-//						UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
-//						UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-						UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-						
-						if (c.isBusinessLogicLocal()) {
-							
-						 appFacadeInterface=new BLFacadeImplementation();
-							
-							
-						}
-						
-						else { //If remote
-							
-							 String serviceName= "http://"+c.getBusinessLogicNode() +":"+ c.getBusinessLogicPort()+"/ws/"+c.getBusinessLogicName()+"?wsdl";
-							 
-							//URL url = new URL("http://localhost:9999/ws/ruralHouses?wsdl");
-							URL url = new URL(serviceName);
-
-					 
-					        //1st argument refers to wsdl document above
-							//2nd argument is service name, refer to wsdl document above
-//					        QName qname = new QName("http://businessLogic/", "FacadeImplementationWSService");
-					        QName qname = new QName("http://businessLogic/", "BLFacadeImplementationService");
-					 
-					        Service service = Service.create(url, qname);
-					 
-					         appFacadeInterface = service.getPort(BLFacade.class);
-						} 
-						/*if (c.getDataBaseOpenMode().equals("initialize")) 
-							appFacadeInterface.initializeBD();
-							*/
-						MainGUI.setBussinessLogic(appFacadeInterface);
-
-					}catch (Exception e) {
-						//a.jLabelSelectOption.setText("Error: "+e.toString());
-						//a.jLabelSelectOption.setForeground(Color.RED);		
-						System.out.println("Error in ApplicationLauncher: "+e.toString());
-					}
-					//a.pack();
+					erreg(arg0);
 				}
 				else if (login.isSelected()) {
-					ConfigXML c=ConfigXML.getInstance();
-					
-					System.out.println(c.getLocale());
-					
-					Locale.setDefault(new Locale(c.getLocale()));
-					
-					System.out.println("Locale: "+Locale.getDefault());
-					LoginGUI a = new LoginGUI();
-					a.setVisible(true);
-					
-					try {
-						
-						BLFacade appFacadeInterface;
-//						UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
-//						UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-						UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-						
-						if (c.isBusinessLogicLocal()) {
-							
-						 appFacadeInterface=new BLFacadeImplementation();
-							
-							
-						}
-						
-						else { //If remote
-							
-							 String serviceName= "http://"+c.getBusinessLogicNode() +":"+ c.getBusinessLogicPort()+"/ws/"+c.getBusinessLogicName()+"?wsdl";
-							 
-							//URL url = new URL("http://localhost:9999/ws/ruralHouses?wsdl");
-							URL url = new URL(serviceName);
-
-					 
-					        //1st argument refers to wsdl document above
-							//2nd argument is service name, refer to wsdl document above
-//					        QName qname = new QName("http://businessLogic/", "FacadeImplementationWSService");
-					        QName qname = new QName("http://businessLogic/", "BLFacadeImplementationService");
-					 
-					        Service service = Service.create(url, qname);
-					 
-					         appFacadeInterface = service.getPort(BLFacade.class);
-						} 
-						/*if (c.getDataBaseOpenMode().equals("initialize")) 
-							appFacadeInterface.initializeBD();
-							*/
-						MainGUI.setBussinessLogic(appFacadeInterface);
-
-					}catch (Exception e) {
-						//a.jLabelSelectOption.setText("Error: "+e.toString());
-						//a.jLabelSelectOption.setForeground(Color.RED);		
-						System.out.println("Error in ApplicationLauncher: "+e.toString());
-					}
-					//a.pack();
+					login(arg0);
 				}
 				
 				else if (rdbtnGonbidatua.isSelected()) {
-					
-					ConfigXML c=ConfigXML.getInstance();
-					
-					System.out.println(c.getLocale());
-					
-					Locale.setDefault(new Locale(c.getLocale()));
-					
-					System.out.println("Locale: "+Locale.getDefault());
-					gonbidatuaGUI a = new gonbidatuaGUI();
-					a.setVisible(true);
-					
-					try {
-						
-						BLFacade appFacadeInterface;
-//						UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
-//						UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-						UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-						
-						if (c.isBusinessLogicLocal()) {
-							
-						 appFacadeInterface=new BLFacadeImplementation();
-							
-							
-						}
-						
-						else { //If remote
-							
-							 String serviceName= "http://"+c.getBusinessLogicNode() +":"+ c.getBusinessLogicPort()+"/ws/"+c.getBusinessLogicName()+"?wsdl";
-							 
-							//URL url = new URL("http://localhost:9999/ws/ruralHouses?wsdl");
-							URL url = new URL(serviceName);
-
-					 
-					        //1st argument refers to wsdl document above
-							//2nd argument is service name, refer to wsdl document above
-//					        QName qname = new QName("http://businessLogic/", "FacadeImplementationWSService");
-					        QName qname = new QName("http://businessLogic/", "BLFacadeImplementationService");
-					 
-					        Service service = Service.create(url, qname);
-					 
-					         appFacadeInterface = service.getPort(BLFacade.class);
-						} 
-						/*if (c.getDataBaseOpenMode().equals("initialize")) 
-							appFacadeInterface.initializeBD();
-							*/
-						MainGUI.setBussinessLogic(appFacadeInterface);
-
-					}catch (Exception e) {
-						a.jLabelSelectOption.setText("Error: "+e.toString());
-						//a.jLabelSelectOption.setForeground(Color.RED);		
-						System.out.println("Error in ApplicationLauncher: "+e.toString());
-					}
-					//a.pack();
-			
+					gonbidatu(arg0);			
 				}
 			}
 		});
@@ -257,5 +101,172 @@ public class index extends JFrame {
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(96, 227, 199, 23);
 		contentPane.add(lblNewLabel);
+	}
+	
+	public void erreg(ActionEvent arg0) {
+		ConfigXML c=ConfigXML.getInstance();
+		
+		System.out.println(c.getLocale());
+		
+		Locale.setDefault(new Locale(c.getLocale()));
+		
+		System.out.println("Locale: "+Locale.getDefault());
+		ErregistratuGUI a = new ErregistratuGUI();
+		a.setVisible(true);
+		this.setVisible(false);
+		
+		try {
+			
+			BLFacade appFacadeInterface;
+//			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
+//			UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+			
+			if (c.isBusinessLogicLocal()) {
+				
+			 appFacadeInterface=new BLFacadeImplementation();
+				
+				
+			}
+			
+			else { //If remote
+				
+				 String serviceName= "http://"+c.getBusinessLogicNode() +":"+ c.getBusinessLogicPort()+"/ws/"+c.getBusinessLogicName()+"?wsdl";
+				 
+				//URL url = new URL("http://localhost:9999/ws/ruralHouses?wsdl");
+				URL url = new URL(serviceName);
+
+		 
+		        //1st argument refers to wsdl document above
+				//2nd argument is service name, refer to wsdl document above
+//		        QName qname = new QName("http://businessLogic/", "FacadeImplementationWSService");
+		        QName qname = new QName("http://businessLogic/", "BLFacadeImplementationService");
+		 
+		        Service service = Service.create(url, qname);
+		 
+		         appFacadeInterface = service.getPort(BLFacade.class);
+			} 
+			/*if (c.getDataBaseOpenMode().equals("initialize")) 
+				appFacadeInterface.initializeBD();
+				*/
+			MainGUI.setBussinessLogic(appFacadeInterface);
+
+		}catch (Exception e) {
+			//a.jLabelSelectOption.setText("Error: "+e.toString());
+			//a.jLabelSelectOption.setForeground(Color.RED);		
+			System.out.println("Error in ApplicationLauncher: "+e.toString());
+		}
+		//a.pack();
+	}
+	public void login(ActionEvent arg0) {
+
+		ConfigXML c=ConfigXML.getInstance();
+		
+		System.out.println(c.getLocale());
+		
+		Locale.setDefault(new Locale(c.getLocale()));
+		
+		System.out.println("Locale: "+Locale.getDefault());
+		LoginGUI a = new LoginGUI();
+		a.setVisible(true);
+		this.setVisible(false);
+		try {
+			
+			BLFacade appFacadeInterface;
+//			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
+//			UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+			
+			if (c.isBusinessLogicLocal()) {
+				
+			 appFacadeInterface=new BLFacadeImplementation();
+				
+				
+			}
+			
+			else { //If remote
+				
+				 String serviceName= "http://"+c.getBusinessLogicNode() +":"+ c.getBusinessLogicPort()+"/ws/"+c.getBusinessLogicName()+"?wsdl";
+				 
+				//URL url = new URL("http://localhost:9999/ws/ruralHouses?wsdl");
+				URL url = new URL(serviceName);
+
+		 
+		        //1st argument refers to wsdl document above
+				//2nd argument is service name, refer to wsdl document above
+//		        QName qname = new QName("http://businessLogic/", "FacadeImplementationWSService");
+		        QName qname = new QName("http://businessLogic/", "BLFacadeImplementationService");
+		 
+		        Service service = Service.create(url, qname);
+		 
+		         appFacadeInterface = service.getPort(BLFacade.class);
+			} 
+			/*if (c.getDataBaseOpenMode().equals("initialize")) 
+				appFacadeInterface.initializeBD();
+				*/
+			MainGUI.setBussinessLogic(appFacadeInterface);
+
+		}catch (Exception e) {
+			//a.jLabelSelectOption.setText("Error: "+e.toString());
+			//a.jLabelSelectOption.setForeground(Color.RED);		
+			System.out.println("Error in ApplicationLauncher: "+e.toString());
+		}
+		//a.pack();
+	}
+	public void gonbidatu(ActionEvent arg0) {
+
+		ConfigXML c=ConfigXML.getInstance();
+		
+		System.out.println(c.getLocale());
+		
+		Locale.setDefault(new Locale(c.getLocale()));
+		
+		System.out.println("Locale: "+Locale.getDefault());
+		gonbidatuaGUI a = new gonbidatuaGUI();
+		a.setVisible(true);
+		this.setVisible(false);
+		
+		try {
+			
+			BLFacade appFacadeInterface;
+//			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
+//			UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+			
+			if (c.isBusinessLogicLocal()) {
+				
+			 appFacadeInterface=new BLFacadeImplementation();
+				
+				
+			}
+			
+			else { //If remote
+				
+				 String serviceName= "http://"+c.getBusinessLogicNode() +":"+ c.getBusinessLogicPort()+"/ws/"+c.getBusinessLogicName()+"?wsdl";
+				 
+				//URL url = new URL("http://localhost:9999/ws/ruralHouses?wsdl");
+				URL url = new URL(serviceName);
+
+		 
+		        //1st argument refers to wsdl document above
+				//2nd argument is service name, refer to wsdl document above
+//		        QName qname = new QName("http://businessLogic/", "FacadeImplementationWSService");
+		        QName qname = new QName("http://businessLogic/", "BLFacadeImplementationService");
+		 
+		        Service service = Service.create(url, qname);
+		 
+		         appFacadeInterface = service.getPort(BLFacade.class);
+			} 
+			/*if (c.getDataBaseOpenMode().equals("initialize")) 
+				appFacadeInterface.initializeBD();
+				*/
+			MainGUI.setBussinessLogic(appFacadeInterface);
+
+		}catch (Exception e) {
+			a.jLabelSelectOption.setText("Error: "+e.toString());
+			//a.jLabelSelectOption.setForeground(Color.RED);		
+			System.out.println("Error in ApplicationLauncher: "+e.toString());
+		}
+		//a.pack();
 	}
 }
