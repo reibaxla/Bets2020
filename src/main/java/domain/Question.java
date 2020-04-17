@@ -8,11 +8,20 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
+import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 @SuppressWarnings("serial")
 @XmlAccessorType(XmlAccessType.FIELD)
+//@XmlType(name = "question", propOrder = {
+//	    "questionNumber",
+//	    "question",
+//	    "betMinimum",
+//	    "result",
+//	    "event",
+//	    "kuotak"
+//	})
 @Entity
 public class Question implements Serializable {
 	

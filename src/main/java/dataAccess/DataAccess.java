@@ -12,7 +12,6 @@ import java.util.Vector;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
@@ -220,9 +219,6 @@ public class DataAccess  {
 			
 			db.getTransaction().begin();
 			Question q = ev.addQuestion(question, betMinimum);
-			//db.persist(q);
-			db.persist(ev); // db.persist(q) not required when CascadeType.PERSIST is added in questions property of Event class
-							// @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 			db.getTransaction().commit();
 			return q;
 		
@@ -273,13 +269,12 @@ public class DataAccess  {
 	}
 	
 	public Erabiltzaile isLogin(String posta, String pasahitza) {
-		TypedQuery<Erabiltzaile> query = db.createQuery("SELECT p FROM Erabiltzaile p WHERE p.posta=?1 AND p.pasahitza=?2", Erabiltzaile.class);
-		query.setParameter(1, posta);
-		query.setParameter(2, pasahitza);
-		try { return query.getSingleResult();}
-		catch (NoResultException e) {
-			return null;
+		Erabiltzaile us = db.find(Erabiltzaile.class, posta);
+		if (us!=null) {
+		if(us.getPosta().compareTo(posta)==0 && us.getPasahitza().compareTo(pasahitza)==0)
+			return us;
 		}
+		return null;
 	}
 
 	public int storeUser(Erabiltzaile newUser) {
