@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 //	    "eventDate",
 //	    "questions"
 //	})
+
 @Entity
 public class Event implements Serializable {
 	
