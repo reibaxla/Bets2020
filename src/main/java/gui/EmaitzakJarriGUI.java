@@ -56,11 +56,11 @@ public class EmaitzakJarriGUI extends JFrame {
 	};
 	
 	private String[] columnNamesKuotak = new String[] {
-			"Deskripzioa", 
-			"Kuota", 
+			ResourceBundle.getBundle("Etiquetas").getString("Description"), 
+			ResourceBundle.getBundle("Etiquetas").getString("Fee")
 
 	};
-	private final JButton btnEmaitza = new JButton("Emaitza");
+	private final JButton btnEmaitza = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Result"));
 
 	public EmaitzakJarriGUI()
 	{
@@ -222,9 +222,9 @@ public class EmaitzakJarriGUI extends JFrame {
 				tableModelKuotak.setDataVector(null, columnNamesKuotak);
 
 				if (kuotak.isEmpty())
-					jLabelQueries.setText("NoKuota" + ": "+q.getQuestion());
+					jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("NoFee") + ": "+q.getQuestion());
 				else 
-					jLabelQueries.setText("SelectedQuestion" +" "+q.getQuestion());
+					jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("SelectedQuestion") +" "+q.getQuestion());
 
 				for (domain.Kuota k:kuotak){
 					Vector<Object> row = new Vector<Object>();
@@ -262,7 +262,7 @@ public class EmaitzakJarriGUI extends JFrame {
 				int j=tableEvents.getSelectedRow();
 				domain.Event ev=(domain.Event) tableModelEvents.getValueAt(j,2);
 				if(!isExpire(ev.getEventDate())) {
-					jLabelQueries.setText("Gertaera ez da jokatu");
+					jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("NoEvent"));
 				}
 				else {
 					try {
@@ -273,7 +273,7 @@ public class EmaitzakJarriGUI extends JFrame {
 						String result=(String)tableModelKuotak.getValueAt(y,0);
 						BLFacade b = MainGUI.getBusinessLogic();
 						b.updateQuestion(question.getQuestionNumber(), result);
-						jLabelQueries.setText("Emaitza gorde da");
+						jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("ResultSave"));
 					}catch(Exception e4) {
 						jLabelQueries.setText(e4.getMessage());
 					}

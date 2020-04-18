@@ -48,7 +48,7 @@ public class CreateEventGUI extends JFrame {
 		jCalendar.setBounds(new Rectangle(40, 50, 225, 150));
 		scrollPaneEvents.setBounds(new Rectangle(25, 44, 346, 116));
 
-		jButtonCreate.setText("Create Event");
+		jButtonCreate.setText(ResourceBundle.getBundle("Etiquetas").getString("CreateEvent"));
 		jButtonCreate.setBounds(new Rectangle(100, 275, 130, 30));
 		jButtonCreate.setEnabled(true);
 

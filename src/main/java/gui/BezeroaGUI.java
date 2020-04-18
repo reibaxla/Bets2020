@@ -45,6 +45,8 @@ public class BezeroaGUI extends JFrame {
 	private JPanel panel;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JButton btnDiruaSartu;
+
+	private JButton btnMugIk;
 	
 	public BezeroaGUI(Erabiltzaile logeatuta) {
 		super();
@@ -56,7 +58,7 @@ public class BezeroaGUI extends JFrame {
 			public void windowClosing(WindowEvent e) {
 				try {
 				} catch (Exception e1) {
-					System.out.println("Error: "+e1.toString()+" , probably problems with Business Logic or Database");
+					System.out.println("Error: "+e1.toString()+ResourceBundle.getBundle("Etiquetas").getString("Problems"));
 				}
 				System.exit(1);
 			}
@@ -82,7 +84,7 @@ public class BezeroaGUI extends JFrame {
 			jContentPane.add(getPanel());
 			jContentPane.add(getBtnDiruaSartu());
 			
-			JButton btnMugIk = new JButton(ResourceBundle.getBundle("Etiquetas").getString("BezeroaGUI.btnNewButton.text")); //$NON-NLS-1$ //$NON-NLS-2$
+			btnMugIk = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MoveBnt")); //$NON-NLS-1$ //$NON-NLS-2$
 			btnMugIk.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					JFrame a = new MugimenduakIkusiGUI(logeatuta);
@@ -176,6 +178,8 @@ public class BezeroaGUI extends JFrame {
 	private void redibujar() {
 		jLabelSelectOption.setText(ResourceBundle.getBundle("Etiquetas").getString("SelectOption"));
 		jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("QueryQueries"));
+		btnMugIk.setText(ResourceBundle.getBundle("Etiquetas").getString("MoveBnt"));
+		btnDiruaSartu.setText(ResourceBundle.getBundle("Etiquetas").getString("MoneyBnt"));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainTitle"));
 	}
 	
@@ -189,7 +193,7 @@ public class BezeroaGUI extends JFrame {
 					
 				}
 			});
-			btnDiruaSartu.setText(ResourceBundle.getBundle("Etiquetas").getString("BezeroaGUI.btnDiruaSartu.text")); //$NON-NLS-1$ //$NON-NLS-2$
+			btnDiruaSartu.setText(ResourceBundle.getBundle("Etiquetas").getString("MoneyBnt")); //$NON-NLS-1$ //$NON-NLS-2$
 			btnDiruaSartu.setBounds(0, 128, 481, 63);
 		}
 		return btnDiruaSartu;

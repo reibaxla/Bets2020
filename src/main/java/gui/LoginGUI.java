@@ -15,7 +15,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.util.ResourceBundle;
 
 import domain.Admin;
 import domain.Bezero;
@@ -59,12 +59,12 @@ public class LoginGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel posta = new JLabel("Posta");
+		JLabel posta = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Email"));
 		posta.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		posta.setBounds(60, 54, 78, 27);
 		contentPane.add(posta);
 		
-		JLabel pasahitza = new JLabel("Pasahitza");
+		JLabel pasahitza = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Password"));
 		pasahitza.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		pasahitza.setBounds(60, 136, 78, 14);
 		contentPane.add(pasahitza);
@@ -78,7 +78,7 @@ public class LoginGUI extends JFrame {
 		passString.setBounds(190, 135, 179, 20);
 		contentPane.add(passString);
 		
-		JButton sartu = new JButton("Log in");
+		JButton sartu = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Login"));
 		sartu.setBounds(89, 179, 89, 23);
 		contentPane.add(sartu);
 		sartu.addActionListener(new ActionListener() {
@@ -92,7 +92,7 @@ public class LoginGUI extends JFrame {
 		erroreaLB.setBounds(136, 218, 255, 14);
 		contentPane.add(erroreaLB);
 		
-		JButton btnErregistratu = new JButton("Erregistratu");
+		JButton btnErregistratu = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Registred"));
 		btnErregistratu.setBounds(254, 176, 115, 29);
 		contentPane.add(btnErregistratu);
 		btnErregistratu.addActionListener(new ActionListener() {
@@ -110,7 +110,7 @@ public class LoginGUI extends JFrame {
 		Erabiltzaile logina = log1.isLogin(postaString.getText(), pass);
 		
 		if(pass.isEmpty() || postaString.getText().isEmpty()) {
-			erroreaLB.setText("Posta edo pasahitza okerra da");
+			erroreaLB.setText(ResourceBundle.getBundle("Etiquetas").getString("EmailError"));
 		}
 		else if(logina!=null) {
 			if(logina instanceof Bezero) {
@@ -125,7 +125,7 @@ public class LoginGUI extends JFrame {
 			}
 		}
 		else {
-			erroreaLB.setText("Posta edo pasahitza okerra da");
+			erroreaLB.setText(ResourceBundle.getBundle("Etiquetas").getString("EmailError"));
 		}
 	}
 	public void erreg_actionPerformed(ActionEvent e) {

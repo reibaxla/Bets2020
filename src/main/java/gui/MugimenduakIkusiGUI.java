@@ -67,19 +67,19 @@ public class MugimenduakIkusiGUI extends JFrame{
 		JlabelError.setBounds(53, 296, 450, 20);
 		getContentPane().add(JlabelError);
 		
-		JButton btnApustuaEzabatu = new JButton("Apustua Ezabatu");
+		JButton btnApustuaEzabatu = new JButton(ResourceBundle.getBundle("Etiquetas").getString("DeleteBet"));
 		btnApustuaEzabatu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Date data= new Date();
 				int i=tableMug.getSelectedRow();
 				domain.Mugimendu ev=(domain.Mugimendu)tableModelMug.getValueAt(i,4);
 				if(ev.getMota() instanceof Apustua) {
-					if(ev.getFirstEventDate().compareTo(data)<=0) JlabelError.setText("Apustutako gertaera iraganekoa da edo dagoeneko hasi da");
+					if(ev.getFirstEventDate().compareTo(data)<=0) JlabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("GertIrag"));
 					else {
 						BLFacade b = MainGUI.getBusinessLogic();
 						Apustua ap=(domain.Apustua)ev.getMota();
 						b.removeApustua(ap, ev, user);
-						JlabelError.setText("Apustua egoki eguneratu da");
+						JlabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("ApustuEzab"));
 						
 						tableModelMug.setDataVector(null, columnNamesMug);
 						tableModelMug.setColumnCount(5); // question obj aukeratu ahal izateko
@@ -90,7 +90,7 @@ public class MugimenduakIkusiGUI extends JFrame{
 							//mu.get y lo que quiera meter
 							row.add(us.getPosta());
 							row.add(mu.getData());
-							if(mu.getMota() instanceof Apustua) row.add("Apustua");
+							if(mu.getMota() instanceof Apustua) row.add(ResourceBundle.getBundle("Etiquetas").getString("Bets"));
 							else row.add(mu.getMota());
 							
 							row.add(mu.getDiruMug());
@@ -107,16 +107,16 @@ public class MugimenduakIkusiGUI extends JFrame{
 					}
 				}
 				else {
-					JlabelError.setText("Ez da apustu bat");
+					JlabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("BetNone"));
 				}
 			}
 		});
 		btnApustuaEzabatu.setBounds(351, 332, 165, 37);
 		getContentPane().add(btnApustuaEzabatu);
 		
-		JLabel MugLabel = new JLabel("Mugimenduak");
+		JLabel MugLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MoveBnt"));
 		MugLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		MugLabel.setBounds(33, 28, 119, 20);
+		MugLabel.setBounds(33, 28, 196, 20);
 		getContentPane().add(MugLabel);
 		
 		scrollPaneMug.setBounds(new Rectangle(43, 64, 532, 213));
@@ -145,7 +145,7 @@ public class MugimenduakIkusiGUI extends JFrame{
 			//mu.get y lo que quiera meter
 			row.add(user.getPosta());
 			row.add(mu.getData());
-			if(mu.getMota() instanceof Apustua) row.add("Apustua");
+			if(mu.getMota() instanceof Apustua) row.add(ResourceBundle.getBundle("Etiquetas").getString("Bets"));
 			else row.add(mu.getMota());
 			
 			row.add(mu.getDiruMug());

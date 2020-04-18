@@ -65,22 +65,22 @@ public class ApustuEginGUI extends JFrame {
 	};
 	
 	private String[] columnNamesKuotak = new String[] {
-			"Deskripzioa", 
-			"Kuota", 
+			ResourceBundle.getBundle("Etiquetas").getString("Description"),
+			ResourceBundle.getBundle("Etiquetas").getString("Fee"),
 
 	};
 	
 	private String[] columnNamesApustu = new String[] {
-			"Kuota", 
-			"Pronostikoa", 
+			ResourceBundle.getBundle("Etiquetas").getString("Fee"),
+			ResourceBundle.getBundle("Etiquetas").getString("Pronostic"), 
 
 	};
 	
-	private final JLabel lblZenbatekoa = new JLabel("Apostua zenbatekoa:");
+	private final JLabel lblZenbatekoa = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ApostuaZenbatekoa"));
 	private final JButton btnApostuaEgin = new JButton();
 	private final JTextField textZenbatekoa = new JTextField();
 	private final JLabel label = new JLabel("€");
-	private final JButton btnGehituApostua = new JButton("Gehitu apostura");
+	private final JButton btnGehituApostua = new JButton(ResourceBundle.getBundle("Etiquetas").getString("GehituApostura"));
 
 	public ApustuEginGUI(Erabiltzaile logeatuta)
 	{
@@ -244,9 +244,9 @@ public class ApustuEginGUI extends JFrame {
 				tableModelKuotak.setColumnCount(3);
 
 				if (kuotak.isEmpty())
-					jLabelQueries.setText("NoKuota" + ": "+q.getQuestion());
+					jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("NoFee") + ": "+q.getQuestion());
 				else 
-					jLabelQueries.setText("SelectedQuestion" +" "+q.getQuestion());
+					jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("SelectedQuestion") +" "+q.getQuestion());
 
 				for (domain.Kuota k:kuotak){
 					Vector<Object> row = new Vector<Object>();
@@ -287,25 +287,25 @@ public class ApustuEginGUI extends JFrame {
 				double aZ = Double.parseDouble(textZenbatekoa.getText());
 				
 				if (textZenbatekoa.getText().length()>0 && aZ<= q.getBetMinimum()) {
-					jLabelQueries.setText("Ez da apustu minimoa betetzen Min: " + q.getBetMinimum() );
+					jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("NoMin") + q.getBetMinimum() );
 				} else
 					try {
 						BLFacade b = MainGUI.getBusinessLogic();
 						Apustua ap=b.sortuApustua(aZ, kn, logeatuta, data, firstEventDate);
 						if(ap!=null) {
-						jLabelQueries.setText("Apustua ongi egin da. " + logeatuta.getPosta() + " kontuarekin "+ aZ+" €");
+						jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("FineBet") + logeatuta.getPosta() + ResourceBundle.getBundle("Etiquetas").getString("Account") + aZ+" €");
 						firstEventDate=null;
 						kn.removeAllElements();
 						}
 						else {
-							jLabelQueries.setText("Arazo bat egon da apustuarekin");
+							jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("ProblemBet"));
 							}
 						}catch(Exception e4){
 							jLabelQueries.setText(e4.getMessage());
 						}	
 			}
 		});
-		btnApostuaEgin.setText(ResourceBundle.getBundle("Etiquetas").getString("ApustuEginGUI.btnApostuaEgin.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btnApostuaEgin.setText(ResourceBundle.getBundle("Etiquetas").getString("BetBottom")); //$NON-NLS-1$ //$NON-NLS-2$
 		btnApostuaEgin.setBounds(1022, 393, 140, 29);
 		
 		getContentPane().add(btnApostuaEgin);
@@ -334,7 +334,7 @@ public class ApustuEginGUI extends JFrame {
 				domain.Event ev=(domain.Event) tableModelEvents.getValueAt(j,2);
 				
 				if(isExpire(ev.getEventDate())) {
-					jLabelQueries.setText("Ezin da gertaera honetan apustu egin");
+					jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("ProblemBet1"));
 				}
 //				else if(logeatuta.DoesApustuaExists(q)) {
 //					jLabelQueries.setText("Apustua existitzen da");
@@ -351,9 +351,9 @@ public class ApustuEginGUI extends JFrame {
 					tableModelApustu.setColumnCount(3);
 
 					if (kn.isEmpty())
-						jLabelQueries.setText("Ez dago aposturik");
+						jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("BetNone"));
 					else 
-						jLabelQueries.setText("Apustua gorde da");
+						jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("BetSave"));
 
 					for (domain.Kuota kuota: kn){
 						Vector<Object> row = new Vector<Object>();

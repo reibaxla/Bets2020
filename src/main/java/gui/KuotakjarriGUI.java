@@ -132,7 +132,7 @@ public class KuotakjarriGUI extends JFrame {
 						for (domain.Event ev:events){
 							Vector<Object> row = new Vector<Object>();
 
-							System.out.println("Events "+ev);
+							System.out.println(ResourceBundle.getBundle("Etiquetas").getString("Event")+ev);
 
 							row.add(ev.getEventNumber());
 							row.add(ev.getDescription());
@@ -217,15 +217,15 @@ public class KuotakjarriGUI extends JFrame {
 		getContentPane().add(txtPronostikoa);
 		txtPronostikoa.setColumns(10);
 		
-		JLabel lblDeskripzioa = new JLabel("Deskripzioa");
+		JLabel lblDeskripzioa = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Description"));
 		lblDeskripzioa.setBounds(130, 384, 110, 20);
 		getContentPane().add(lblDeskripzioa);
 		
-		JLabel lblPronostikoa = new JLabel("Pronostikoa");
+		JLabel lblPronostikoa = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Pronostic"));
 		lblPronostikoa.setBounds(130, 445, 110, 20);
 		getContentPane().add(lblPronostikoa);
 		
-		JButton btnAddKuota = new JButton("Add Kuota");
+		JButton btnAddKuota = new JButton(ResourceBundle.getBundle("Etiquetas").getString("AddFee"));
 		btnAddKuota.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -233,7 +233,7 @@ public class KuotakjarriGUI extends JFrame {
 				domain.Event ev=(domain.Event) tableModelEvents.getValueAt(j,2);
 				
 				if(isExpire(ev.getEventDate())) {
-					jLabelQueries.setText("Ezin dira kuotak atzitu gertaera pasa da");
+					jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("FeeProblem"));
 				}
 				else {
 					int i=tableQueries.getSelectedRow();
@@ -246,7 +246,7 @@ public class KuotakjarriGUI extends JFrame {
 						BLFacade managerDB = MainGUI.getBusinessLogic();
 						managerDB.createKuota(question, deskripzioa, pronostikoa);
 					
-						jLabelQueries.setText("Kuota sortu da");
+						jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("CreateFee"));
 					} catch (Exception e4) {
 						jLabelQueries.setText(e4.getMessage());
 					}

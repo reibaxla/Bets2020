@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 
 
 public class ErregistratuGUI extends JFrame {
@@ -62,27 +63,27 @@ public class ErregistratuGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel izena = new JLabel("Izena");
+		JLabel izena = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Name"));
 		izena.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		izena.setBounds(29, 21, 46, 14);
 		contentPane.add(izena);
 		
-		JLabel abizena = new JLabel("Abizena");
+		JLabel abizena = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Surname"));
 		abizena.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		abizena.setBounds(29, 51, 71, 14);
 		contentPane.add(abizena);
 		
-		JLabel adina = new JLabel("Adina");
+		JLabel adina = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Age"));
 		adina.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		adina.setBounds(29, 81, 46, 14);
 		contentPane.add(adina);
 		
-		JLabel posta = new JLabel("Posta");
+		JLabel posta = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Email"));
 		posta.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		posta.setBounds(29, 111, 46, 14);
 		contentPane.add(posta);
 		
-		JLabel pasahitza = new JLabel("Pasahitza");
+		JLabel pasahitza = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Password"));
 		pasahitza.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		pasahitza.setBounds(29, 163, 71, 14);
 		contentPane.add(pasahitza);
@@ -107,7 +108,7 @@ public class ErregistratuGUI extends JFrame {
 		postaField.setBounds(207, 108, 176, 20);
 		contentPane.add(postaField);
 		
-		JButton erregistratuBt = new JButton("erregistratu");
+		JButton erregistratuBt = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Registred"));
 		erregistratuBt.setBounds(156, 232, 125, 31);
 		contentPane.add(erregistratuBt);
 		erregistratuBt.addActionListener(new ActionListener() {
@@ -129,12 +130,12 @@ public class ErregistratuGUI extends JFrame {
 		passKonpField.setBounds(207, 193, 135, 20);
 		contentPane.add(passKonpField);
 		
-		JLabel pasahitzaKonpLB = new JLabel("Pasahitza errepikatu");
+		JLabel pasahitzaKonpLB = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Password"));
 		pasahitzaKonpLB.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		pasahitzaKonpLB.setBounds(29, 193, 163, 20);
 		contentPane.add(pasahitzaKonpLB);
 		
-		JLabel postaKonpLB = new JLabel("Posta errepikatu");
+		JLabel postaKonpLB = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Email"));
 		postaKonpLB.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		postaKonpLB.setBounds(29, 136, 125, 14);
 		contentPane.add(postaKonpLB);
@@ -155,23 +156,23 @@ public class ErregistratuGUI extends JFrame {
 		
 		int zenb;
 		if(postaField.getText().contains("@mail.com") ==false || postaField.getText().contentEquals(postaKonpField.getText())== false) {
-			erroreLB.setText("Posta-elektronikoa ez dago ondo");
+			erroreLB.setText(ResourceBundle.getBundle("Etiquetas").getString("EmailError"));
 		}
 		else if(izenaField.getText().isEmpty()) {
-			erroreLB.setText("Izena beharrezkoa da");
+			erroreLB.setText(ResourceBundle.getBundle("Etiquetas").getString("NameError"));
 		}
 		else if(abizenaField.getText().isEmpty()) {
-			erroreLB.setText("Abizena beharrezkoa da");
+			erroreLB.setText(ResourceBundle.getBundle("Etiquetas").getString("SurnameError"));
 		}
 		else if(Integer.valueOf(adinaField.getText())<=18) {
-			erroreLB.setText("Adin nagusia izan behar zara erregistratzeko");
+			erroreLB.setText(ResourceBundle.getBundle("Etiquetas").getString("Teen"));
 		}
 		else if(pass.length()<7) {
 			erroreLB.setText("");
-			erroreLB.setText("Pasahitzak gutxienez 8 karaktere izan behar ditu");
+			erroreLB.setText(ResourceBundle.getBundle("Etiquetas").getString("PassError"));
 		}
 		else if(pass.contentEquals(passKonp)==false){
-			erroreLB.setText("Pasahitzak ez dira berdinak");
+			erroreLB.setText(ResourceBundle.getBundle("Etiquetas").getString("PassError1"));
 		 }
 		
 		else {
@@ -182,7 +183,7 @@ public class ErregistratuGUI extends JFrame {
 				this.setVisible(false);
 			}
 			else if(zenb==1) {
-				erroreLB.setText("Posta existitzen da");
+				erroreLB.setText(ResourceBundle.getBundle("Etiquetas").getString("EmailExists"));
 			}
 		}					
 	}

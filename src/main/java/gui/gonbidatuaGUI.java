@@ -47,7 +47,7 @@ public class gonbidatuaGUI extends JFrame {
 			public void windowClosing(WindowEvent e) {
 				try {
 				} catch (Exception e1) {
-					System.out.println("Error: "+e1.toString()+" , probably problems with Business Logic or Database");
+					System.out.println("Error: "+e1.toString()+ ResourceBundle.getBundle("Etiquetas").getString("Problems"));
 				}
 				System.exit(1);
 			}

@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
+import java.util.ResourceBundle;
 
 public class diruaGUI extends JFrame {
 	/**
@@ -31,6 +32,7 @@ public class diruaGUI extends JFrame {
 	private JTextField textCVV;
 	private JLabel jLabelMezu = new JLabel(" ");
 	private JLabel jLabelErrore = new JLabel(" ");
+	private JButton btnSartu;
 	
 	public diruaGUI(Erabiltzaile logeatuta)
 	{
@@ -48,7 +50,7 @@ public class diruaGUI extends JFrame {
 		getContentPane().setLayout(null);
 		this.setSize(new Dimension(422, 297));
 		
-		JLabel Kantitatea = new JLabel("Sartu nahi duzun kantitatea");
+		JLabel Kantitatea = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Money"));
 		Kantitatea.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		Kantitatea.setBounds(26, 60, 192, 34);
 		getContentPane().add(Kantitatea);
@@ -63,7 +65,7 @@ public class diruaGUI extends JFrame {
 		euro.setBounds(349, 69, 56, 16);
 		getContentPane().add(euro);
 		
-		JLabel lblIzenabizena = new JLabel("Izen-Abizena:");
+		JLabel lblIzenabizena = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Name"));
 		lblIzenabizena.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblIzenabizena.setBounds(27, 43, 127, 16);
 		getContentPane().add(lblIzenabizena);
@@ -73,7 +75,7 @@ public class diruaGUI extends JFrame {
 		textIzena.setBounds(132, 41, 240, 22);
 		getContentPane().add(textIzena);
 		
-		JLabel lblTxartelarenZenbakia = new JLabel("Txartelaren zenbakia");
+		JLabel lblTxartelarenZenbakia = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Card"));
 		lblTxartelarenZenbakia.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblTxartelarenZenbakia.setBounds(26, 98, 146, 16);
 		getContentPane().add(lblTxartelarenZenbakia);
@@ -83,7 +85,7 @@ public class diruaGUI extends JFrame {
 		textTxartela.setBounds(171, 96, 201, 22);
 		getContentPane().add(textTxartela);
 		
-		JLabel lblNewLabel = new JLabel("Data");
+		JLabel lblNewLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Date"));
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel.setBounds(26, 127, 42, 16);
 		getContentPane().add(lblNewLabel);
@@ -118,7 +120,7 @@ public class diruaGUI extends JFrame {
 		jLabelErrore.setBounds(162, 220, 276, 14);
 		getContentPane().add(jLabelErrore);
 		
-		JButton btnSartu = new JButton("SARTU");
+		btnSartu = new JButton(ResourceBundle.getBundle("Etiquetas").getString("SARTU"));
 		btnSartu.setBounds(147, 185, 127, 22);
 		getContentPane().add(btnSartu);
 		
@@ -131,7 +133,7 @@ public class diruaGUI extends JFrame {
 					double quantity = Double.parseDouble(textFieldDiru.getText());
 					if (quantity<10.00 || quantity>500.00) {
 						jLabelMezu.setText("");
-						jLabelErrore.setText("Sartu duzun kantitatea ez da 10 eta 500 artekoa");
+						jLabelErrore.setText(ResourceBundle.getBundle("Etiquetas").getString("MoneyError"));
 					}else {
 						String hila = textHilabetea.getText();
 						String urte = textUrtea.getText();
@@ -151,35 +153,35 @@ public class diruaGUI extends JFrame {
 										BLFacade b = MainGUI.getBusinessLogic();
 										b.updateUser(logeatuta, quantity, data);
 											
-										jLabelErrore.setText("");
-										jLabelMezu.setText("Dirua sartu da.");
+										jLabelErrore.setText(ResourceBundle.getBundle("Etiquetas").getString("Entered"));
+										jLabelMezu.setText("");
 																
 									}else {
-										jLabelErrore.setText("Errore bat dago, cvv-rekin. ");
+										jLabelErrore.setText(ResourceBundle.getBundle("Etiquetas").getString("Cvv"));
 										jLabelMezu.setText("");
 									}
 									
 								}else {
-									jLabelErrore.setText("Errore bat dago, urtea edo hilabetearekin ");
+									jLabelErrore.setText(ResourceBundle.getBundle("Etiquetas").getString("DateProb"));
 									jLabelMezu.setText("");
 								}
 								
 							}else {
-								jLabelErrore.setText("Errore bat dago, urtearekin. ");
+								jLabelErrore.setText(ResourceBundle.getBundle("Etiquetas").getString("DateProb"));
 								jLabelMezu.setText("");
 							}
 							}else {
-								jLabelErrore.setText("Errore bat dago, hilabetearekin. ");
+								jLabelErrore.setText(ResourceBundle.getBundle("Etiquetas").getString("DateProb"));
 								jLabelMezu.setText("");
 							}
 								
 							}else {
-								jLabelErrore.setText("Errore bat dago, txartel zenbakiarekin. ");
+								jLabelErrore.setText(ResourceBundle.getBundle("Etiquetas").getString("CardProb"));
 								jLabelMezu.setText("");
 							}
 						}
 					}else {
-						jLabelErrore.setText("Errore bat dago, diru kantitatearekin. ");
+						jLabelErrore.setText(ResourceBundle.getBundle("Etiquetas").getString("MoneyError"));
 						jLabelMezu.setText("");
 					}			
 			}

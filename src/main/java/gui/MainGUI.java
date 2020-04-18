@@ -49,6 +49,12 @@ public class MainGUI extends JFrame {
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JButton jButtonCreateEvent;
 	private JButton btnMugIkus;
+
+	private JButton btnKuotajarri;
+
+	private JButton btnDiruaSartu;
+
+	private JButton btnEmaitza;
 	
 	/**
 	 * This is the default constructor
@@ -64,8 +70,7 @@ public class MainGUI extends JFrame {
 				try {
 					//if (ConfigXML.getInstance().isBusinessLogicLocal()) facade.close();
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					System.out.println("Error: "+e1.toString()+" , probably problems with Business Logic or Database");
+					System.out.println("Error: "+e1.toString()+ResourceBundle.getBundle("Etiquetas").getString("Problems"));
 				}
 				System.exit(1);
 			}
@@ -106,7 +111,8 @@ public class MainGUI extends JFrame {
 			jContentPane.add(getRdbtnNewRadioButton_2());
 			jContentPane.add(getRdbtnNewRadioButton());
 			
-			JButton btnEmaitza = new JButton("Emaitza Jarri");
+			btnEmaitza = new JButton();
+			btnEmaitza.setText(ResourceBundle.getBundle("Etiquetas").getString("Result"));
 			btnEmaitza.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					JFrame a = new EmaitzakJarriGUI();
@@ -116,7 +122,7 @@ public class MainGUI extends JFrame {
 			btnEmaitza.setBounds(31, 94, 211, 43);
 			jContentPane.add(btnEmaitza);
 			
-			JButton btnKuotajarri = new JButton("Kuota jarri");
+			btnKuotajarri = new JButton(ResourceBundle.getBundle("Etiquetas").getString("PutFee"));
 			btnKuotajarri.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					JFrame a = new KuotakjarriGUI();
@@ -126,7 +132,8 @@ public class MainGUI extends JFrame {
 			btnKuotajarri.setBounds(242, 137, 211, 50);
 			jContentPane.add(btnKuotajarri);
 			
-			JButton btnDiruaSartu = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.btnDiruaSartu.text")); //$NON-NLS-1$ //$NON-NLS-2$
+			btnDiruaSartu = new JButton();
+			btnDiruaSartu.setText(ResourceBundle.getBundle("Etiquetas").getString("MoneyBnt"));
 			btnDiruaSartu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					JFrame a = new diruaGUI(logeatuta);
@@ -243,13 +250,17 @@ public class MainGUI extends JFrame {
 		jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("QueryQueries"));
 		jButtonCreateQuery.setText(ResourceBundle.getBundle("Etiquetas").getString("CreateQuery"));
 		jButtonCreateEvent.setText(ResourceBundle.getBundle("Etiquetas").getString("CreateEvent"));
+		btnEmaitza.setText(ResourceBundle.getBundle("Etiquetas").getString("Result"));
+		btnDiruaSartu.setText(ResourceBundle.getBundle("Etiquetas").getString("MoneyBnt"));
+		btnKuotajarri.setText(ResourceBundle.getBundle("Etiquetas").getString("PutFee"));
+		btnMugIkus.setText(ResourceBundle.getBundle("Etiquetas").getString("MoveBnt"));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainTitle"));
 	}
 	private JButton getJButtonCreateEvent() {
 		if (jButtonCreateEvent == null) {
 			jButtonCreateEvent = new JButton();
 			jButtonCreateEvent.setBounds(242, 94, 211, 43);
-			jButtonCreateEvent.setText("CreateEvent");
+			jButtonCreateEvent.setText(ResourceBundle.getBundle("Etiquetas").getString("CreateEvent"));
 			jButtonCreateEvent.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					JFrame a = new CreateEventGUI();
@@ -262,7 +273,8 @@ public class MainGUI extends JFrame {
 	
 	private JButton getBtnMugIkus() {
 		if (btnMugIkus == null) {
-			btnMugIkus = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.btnNewButton.text")); //$NON-NLS-1$ //$NON-NLS-2$
+			btnMugIkus = new JButton(); //$NON-NLS-1$ //$NON-NLS-2$
+			btnMugIkus.setText(ResourceBundle.getBundle("Etiquetas").getString("MoveBnt"));
 			btnMugIkus.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					JFrame a = new MugimenduakIkusiGUI(logeatuta);
