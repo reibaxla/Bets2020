@@ -8,8 +8,10 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlID;
+import javax.xml.bind.annotation.XmlSeeAlso;
 
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlSeeAlso ({Bezero.class, Admin.class})
 @Entity
 public abstract class Erabiltzaile implements Serializable {
 	
@@ -90,8 +92,8 @@ public abstract class Erabiltzaile implements Serializable {
 		this.apustuak = apustuak;
 	}
 	
-	public Apustua addApustu(double zenbatekoa, Vector<Kuota> kuota)  {
-        Apustua ap=new Apustua(zenbatekoa, kuota, this);
+	public Apustua addApustu(double zenbatekoa, Vector<Kuota> kuota, Date firstEventDate, Date data)  {
+        Apustua ap=new Apustua(zenbatekoa, kuota, firstEventDate, data, this);
         this.apustuak.add(ap);
         return ap;
 	}
@@ -117,8 +119,7 @@ public abstract class Erabiltzaile implements Serializable {
 		this.mugimenduak = mugimenduak;
 	}
 	
-	public Mugimendu addMugimendu(Object mota, double diruMug, Date data, Date firstEventDate)  {
-        Mugimendu mu=new Mugimendu(mota, diruMug, data, firstEventDate, this);
+	public Mugimendu addMugimendu(Mugimendu mu)  {
         this.mugimenduak.add(mu);
         return mu;
 	}
@@ -126,7 +127,10 @@ public abstract class Erabiltzaile implements Serializable {
 	public boolean remApustu(Apustua ap) {
 		return this.apustuak.remove(ap);
 	}
-	public boolean remMug(Mugimendu mug) {
+	public boolean kantzelatuMug(Mugimendu mug) {
+		Date data= new Date();
+		Mugimendu mu = new Mugimendu(data, mug.getDirua(), this);
+		this.addMugimendu(mu);
 		return this.mugimenduak.remove(mug);
 	}
 	

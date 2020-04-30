@@ -12,39 +12,34 @@ import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-@SuppressWarnings("serial")
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public class Mugimendu implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	@XmlID @Id
 	@XmlJavaTypeAdapter(IntegerAdapter.class)
 	@GeneratedValue
 	private Integer mugId;
-	private double diruMug;
 	private Date data;
-	private Object mota;
-	private Date firstEventDate;
+	private double dirua;
 	@XmlIDREF
 	private Erabiltzaile user;
 	
 	public Mugimendu() {
 		super();
 	}
-	public Mugimendu(Object mota, double diruMug, Date data,Date firstEventDate, Erabiltzaile user) {
+	public Mugimendu(Date data, double dirua, Erabiltzaile user) {
 		super();
-		this.diruMug=diruMug;
 		this.data=data;
-		this.mota=mota;
-		this.firstEventDate=firstEventDate;
+		this.dirua=dirua;
 	}
-	public Mugimendu(Integer mugId, Object mota, double diruMug, Date data, Date firstEventDate, Erabiltzaile user) {
+	
+	public Mugimendu(Integer mugId, Date data, double dirua, Erabiltzaile user) {
 		super();
-		this.diruMug=diruMug;
 		this.data=data;
-		this.mota=mota;
 		this.mugId=mugId;
-		this.firstEventDate=firstEventDate;
+		this.dirua=dirua;
 	}
 	
 	public Integer getMugId(){
@@ -53,14 +48,7 @@ public class Mugimendu implements Serializable{
 	public void setMugId(Integer mugId){
 		this.mugId=mugId;
 	}
-	
-	public double getDiruMug(){
-		return this.diruMug;
-	}
-	public void setDiruMug(double diruMug){
-		this.diruMug=diruMug;
-	}
-	
+		
 	public Date getData(){
 		return this.data;
 	}
@@ -68,24 +56,17 @@ public class Mugimendu implements Serializable{
 		this.data=data;
 	}
 	
-	public Date getFirstEventDate(){
-		return this.firstEventDate;
+	public double getDirua() {
+		return this.dirua;
 	}
-	public void setFirstEventDate(Date data){
-		this.firstEventDate=data;
-	}
-	
-	public Object getMota(){
-		return this.mota;
-	}
-	public void getMota(String mota){
-		this.mota=mota;
+	public void setDirua(double dirua) {
+		this.dirua=dirua;
 	}
 	
 	public Erabiltzaile getUser(){
 		return this.user;
 	}
-	public void getUser(Erabiltzaile user){
+	public void setUser(Erabiltzaile user){
 		this.user=user;
 	}
 }

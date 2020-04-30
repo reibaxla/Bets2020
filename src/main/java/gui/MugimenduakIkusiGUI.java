@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
@@ -18,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 import businessLogic.BLFacade;
 import domain.Apustua;
+import domain.DiruMug;
 import domain.Erabiltzaile;
 import domain.Mugimendu;
 
@@ -70,15 +70,14 @@ public class MugimenduakIkusiGUI extends JFrame{
 		JButton btnApustuaEzabatu = new JButton(ResourceBundle.getBundle("Etiquetas").getString("DeleteBet"));
 		btnApustuaEzabatu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Date data= new Date();
 				int i=tableMug.getSelectedRow();
 				domain.Mugimendu ev=(domain.Mugimendu)tableModelMug.getValueAt(i,4);
-				if(ev.getMota() instanceof Apustua) {
-					if(ev.getFirstEventDate().compareTo(data)<=0) JlabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("GertIrag"));
-					else {
+				if(ev instanceof Apustua) {
+//					Apustua a = (Apustua)ev;
+//					if(a.getFirstEventDate().compareTo(data)<=0) JlabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("GertIrag"));
+//					else {
 						BLFacade b = MainGUI.getBusinessLogic();
-						Apustua ap=(domain.Apustua)ev.getMota();
-						b.removeApustua(ap, ev, user);
+						b.removeApustua(ev, user);
 						JlabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("ApustuEzab"));
 						
 						tableModelMug.setDataVector(null, columnNamesMug);
@@ -90,10 +89,12 @@ public class MugimenduakIkusiGUI extends JFrame{
 							//mu.get y lo que quiera meter
 							row.add(us.getPosta());
 							row.add(mu.getData());
-							if(mu.getMota() instanceof Apustua) row.add(ResourceBundle.getBundle("Etiquetas").getString("Bets"));
-							else row.add(mu.getMota());
+							if(mu instanceof Apustua) row.add(ResourceBundle.getBundle("Etiquetas").getString("Bets"));
+							else if(mu instanceof DiruMug) row.add(ResourceBundle.getBundle("Etiquetas").getString("DiruMug"));
+							else row.add(ResourceBundle.getBundle("Etiquetas").getString("Kantz"));
 							
-							row.add(mu.getDiruMug());
+							row.add(mu.getDirua());
+							row.add(mu);
 							row.add(mu);
 							tableModelMug.addRow(row);	
 						}
@@ -104,7 +105,7 @@ public class MugimenduakIkusiGUI extends JFrame{
 						
 						tableMug.getColumnModel().removeColumn(tableMug.getColumnModel().getColumn(4)); // not shown in JTable
 						
-					}
+//					}
 				}
 				else {
 					JlabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("BetNone"));
@@ -145,10 +146,11 @@ public class MugimenduakIkusiGUI extends JFrame{
 			//mu.get y lo que quiera meter
 			row.add(user.getPosta());
 			row.add(mu.getData());
-			if(mu.getMota() instanceof Apustua) row.add(ResourceBundle.getBundle("Etiquetas").getString("Bets"));
-			else row.add(mu.getMota());
+			if(mu instanceof Apustua) row.add(ResourceBundle.getBundle("Etiquetas").getString("Bets"));
+			else if(mu instanceof DiruMug) row.add(ResourceBundle.getBundle("Etiquetas").getString("DiruMug"));
+			else row.add(ResourceBundle.getBundle("Etiquetas").getString("Kantz"));
 			
-			row.add(mu.getDiruMug());
+			row.add(mu.getDirua());
 			row.add(mu);
 			tableModelMug.addRow(row);	
 		}

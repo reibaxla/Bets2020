@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -29,6 +30,7 @@ import exceptions.QuestionAlreadyExist;
 import domain.Admin;
 import domain.Apustua;
 import domain.Bezero;
+import domain.DiruMug;
 import domain.Erabiltzaile;
 
 /**
@@ -339,8 +341,8 @@ public class DataAccess  {
 		if(us.getDiruZorroa()<zenbatekoa)throw new DirurikEZ("Ez duzu diru nahikorik");
 		
 		db.getTransaction().begin();
-		Apustua ap = us.addApustu(zenbatekoa, kuota);
-		us.addMugimendu(ap, zenbatekoa, data, firstEventDate);
+		Apustua ap = us.addApustu(zenbatekoa, kuota, firstEventDate, data);
+		us.addMugimendu(ap);
 		zenbatekoa=us.getDiruZorroa()-zenbatekoa;
 		us.setDiruZorroa(zenbatekoa);
 		db.getTransaction().commit();
@@ -365,26 +367,25 @@ public class DataAccess  {
 		
 		db.getTransaction().begin();
 		us.setDiruZorroa(dirua+us.getDiruZorroa());
-		us.addMugimendu("Diru sarrera", dirua, data, null);
+		DiruMug a = new DiruMug(dirua, data, "Diru Sarrera", user);
+		us.addMugimendu(a);
 		db.getTransaction().commit();
 		System.out.println(user.getPosta() + " erabiltzailea eguneratua izan da."+dirua);
 
 	}
 	
-	public	boolean	removeApustua (Apustua ap, Mugimendu mu, Erabiltzaile user){
+	public	boolean	removeApustua (Mugimendu mu, Erabiltzaile user){
 		boolean	em=true;
 		try	{
 			db.getTransaction().begin();
-			Apustua	c=db.find(Apustua.class, ap.getApustuId());
-			Mugimendu d = db.find(Mugimendu.class, mu.getMugId());
+			Apustua	c=db.find(Apustua.class, mu);
 			Erabiltzaile us = db.find(Erabiltzaile.class, user.getPosta());
-			us.setDiruZorroa(c.getZenbatekoa()+us.getDiruZorroa());
+			us.setDiruZorroa(c.getDirua()+us.getDiruZorroa());
 			us.remApustu(c);
-			us.remMug(d);
+			us.kantzelatuMug(c);
 			db.remove(c);
-			db.remove(d);
 			db.getTransaction().commit();
-			System.out.println("object	removed	"+ ap.getApustuId());
+			System.out.println("Apustua removed	"+ c.getApustuId());//apustu id
 			}catch(Exception e){
 				e.printStackTrace();
 				em=false;

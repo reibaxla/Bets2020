@@ -82,6 +82,8 @@ public class ApustuEginGUI extends JFrame {
 	private final JLabel label = new JLabel("€");
 	private final JButton btnGehituApostua = new JButton(ResourceBundle.getBundle("Etiquetas").getString("GehituApostura"));
 
+	protected float minBet;
+
 	public ApustuEginGUI(Erabiltzaile logeatuta)
 	{
 		this.logeatuta=logeatuta;
@@ -281,13 +283,10 @@ public class ApustuEginGUI extends JFrame {
 //				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 				Date data = new Date();
 				
-				int y=tableQueries.getSelectedRow();
-				Question q=(Question) tableModelQueries.getValueAt(y,2);
-				
 				double aZ = Double.parseDouble(textZenbatekoa.getText());
 				
-				if (textZenbatekoa.getText().length()>0 && aZ<= q.getBetMinimum()) {
-					jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("NoMin") + q.getBetMinimum() );
+				if (textZenbatekoa.getText().length()>0 && aZ< minBet) {
+					jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("NoMin") + minBet );
 				} else
 					try {
 						BLFacade b = MainGUI.getBusinessLogic();
@@ -332,6 +331,11 @@ public class ApustuEginGUI extends JFrame {
 				
 				int j=tableEvents.getSelectedRow();
 				domain.Event ev=(domain.Event) tableModelEvents.getValueAt(j,2);
+				
+				int y=tableQueries.getSelectedRow();
+				Question q=(Question) tableModelQueries.getValueAt(y,2);
+				
+				if(minBet>q.getBetMinimum()) minBet=q.getBetMinimum();
 				
 				if(isExpire(ev.getEventDate())) {
 					jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("ProblemBet1"));

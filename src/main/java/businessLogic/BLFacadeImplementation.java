@@ -173,9 +173,9 @@ public class BLFacadeImplementation  implements BLFacade {
     }
 
     @WebMethod
-    public	boolean	removeApustua (Apustua ap, Mugimendu mu, Erabiltzaile user) {
+    public	boolean	removeApustua (Mugimendu mu, Erabiltzaile user) {
     	DataAccess dBManager = new DataAccess();
-    	boolean em = dBManager.removeApustua(ap, mu, user);
+    	boolean em = dBManager.removeApustua(mu, user);
 		dBManager.close();
 		return em;
     }

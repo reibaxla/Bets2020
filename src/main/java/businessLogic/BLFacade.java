@@ -80,7 +80,7 @@ public interface BLFacade  {
 	
 	@WebMethod public void updateUser(Erabiltzaile user, double dirua, Date data);
 	
-	@WebMethod public boolean removeApustua (Apustua ap, Mugimendu mu, Erabiltzaile user);
+	@WebMethod public boolean removeApustua (Mugimendu mu, Erabiltzaile user);
 	
 	@WebMethod public Erabiltzaile getUser(Erabiltzaile user);
 	

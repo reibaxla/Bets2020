@@ -1,6 +1,7 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Vector;
 
 import javax.persistence.Entity;
@@ -12,44 +13,47 @@ import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+@SuppressWarnings("serial")
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-public class Apustua implements Serializable {
+public class Apustua extends Mugimendu implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	
 	@XmlID @Id
 	@XmlJavaTypeAdapter(IntegerAdapter.class)
 	@GeneratedValue
 	private Integer apustuId;
-	private double zenbatekoa;
 	private boolean irabazi;
+	private Date firstEventDate;
 	@XmlIDREF
 	private Vector<Kuota> kuota= new Vector<Kuota>();
 	@XmlIDREF
 	private Erabiltzaile user;
+	@XmlIDREF
+	private Mugimendu mu;
 	
 	public Apustua() {
 		super();
 	}
 	
-	public Apustua(double zenbatekoa, Vector<Kuota> kuota, Erabiltzaile user) {
-		super();
-		this.zenbatekoa=zenbatekoa;
+	public Apustua(double dirua, Vector<Kuota> kuota, Date firstEventDate, Date data, Erabiltzaile user) {
+		super(data, dirua, user);
 		this.kuota=kuota;
+		this.firstEventDate=firstEventDate;
 	}
 	
-	public Apustua(Integer apustuId, double zenbatekoa, Vector<Kuota> kuota, Erabiltzaile user) {
-		super();
+	public Apustua(Integer apustuId, double dirua, Vector<Kuota> kuota, Date firstEventDate, Date data, Erabiltzaile user) {
+		super(data, dirua, user);
 		this.apustuId=apustuId;
-		this.zenbatekoa=zenbatekoa;
 		this.kuota=kuota;
+		this.firstEventDate=firstEventDate;
 	}
 	
-	public Apustua(Integer apustuId, double zenbatekoa, Vector<Kuota> kuota, Erabiltzaile user, boolean Irabazi) {
-		super();
+	public Apustua(Integer apustuId, double dirua, Vector<Kuota> kuota, Date firstEventDate, Date data, Erabiltzaile user, boolean Irabazi) {
+		super(data, dirua, user);
 		this.apustuId=apustuId;
-		this.zenbatekoa=zenbatekoa;
 		this.irabazi=Irabazi;
+		this.firstEventDate=firstEventDate;
 	}
 	
 	public Integer getApustuId() {
@@ -59,18 +63,18 @@ public class Apustua implements Serializable {
 		this.apustuId=apustuId;
 	}
 	
-	public double getZenbatekoa() {
-		return this.zenbatekoa;
-	}
-	public void setZenbatekoa(double zenbatekoa) {
-		this.zenbatekoa=zenbatekoa;
-	}
-	
 	public Vector<Kuota> getKuota() {
 		return this.kuota;
 	}
 	public void setKuota(Vector<Kuota> kuota) {
 		this.kuota=kuota;
+	}
+	
+	public Date getFirstEventDate() {
+		return this.firstEventDate;
+	}
+	public void setFirstEventDate(Date firstEventDate) {
+		this.firstEventDate=firstEventDate;
 	}
 	
 	public Erabiltzaile getUser() {
