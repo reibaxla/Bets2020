@@ -47,6 +47,8 @@ public class BezeroaGUI extends JFrame {
 	private JButton btnDiruaSartu;
 
 	private JButton btnMugIk;
+
+	private JButton btnErreplikatu;
 	
 	public BezeroaGUI(Erabiltzaile logeatuta) {
 		super();
@@ -70,7 +72,7 @@ public class BezeroaGUI extends JFrame {
 
 	private void initialize() {
 		// this.setSize(271, 295);
-		this.setSize(495, 344);
+		this.setSize(495, 403);
 		this.setContentPane(getJContentPane());
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainTitle"));
 	}
@@ -93,6 +95,17 @@ public class BezeroaGUI extends JFrame {
 			});
 			btnMugIk.setBounds(0, 191, 481, 61);
 			jContentPane.add(btnMugIk);
+			
+			btnErreplikatu = new JButton();
+			btnErreplikatu.setText(ResourceBundle.getBundle("Etiquetas").getString("Erreplikatu"));
+			btnErreplikatu.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					JFrame a = new ErreplikatuGUI(logeatuta);
+					a.setVisible(true);
+				}
+			});
+			btnErreplikatu.setBounds(0, 250, 473, 54);
+			jContentPane.add(btnErreplikatu);
 		}
 		return jContentPane;
 	}
@@ -167,7 +180,7 @@ public class BezeroaGUI extends JFrame {
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
-			panel.setBounds(0, 252, 481, 44);
+			panel.setBounds(0, 304, 481, 44);
 			panel.add(getRdbtnNewRadioButton_1());
 			panel.add(getRdbtnNewRadioButton_2());
 			panel.add(getRdbtnNewRadioButton());
@@ -181,6 +194,7 @@ public class BezeroaGUI extends JFrame {
 		btnMugIk.setText(ResourceBundle.getBundle("Etiquetas").getString("MoveBnt"));
 		btnDiruaSartu.setText(ResourceBundle.getBundle("Etiquetas").getString("MoneyBnt"));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainTitle"));
+		btnErreplikatu.setText(ResourceBundle.getBundle("Etiquetas").getString("Erreplikatu"));
 	}
 	
 	private JButton getBtnDiruaSartu() {

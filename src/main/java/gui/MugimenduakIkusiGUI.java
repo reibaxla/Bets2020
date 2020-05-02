@@ -143,7 +143,6 @@ public class MugimenduakIkusiGUI extends JFrame{
 
 		for (Mugimendu mu:user.getMugimeduak()){
 			Vector<Object> row = new Vector<Object>();
-			//mu.get y lo que quiera meter
 			row.add(user.getPosta());
 			row.add(mu.getData());
 			if(mu instanceof Apustua) row.add(ResourceBundle.getBundle("Etiquetas").getString("Bets"));

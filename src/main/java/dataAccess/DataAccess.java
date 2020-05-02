@@ -24,6 +24,7 @@ import domain.Mugimendu;
 import domain.Question;
 import exceptions.DirurikEZ;
 import exceptions.EmaitzaExist;
+import exceptions.ErabiltzaileNoExist;
 import exceptions.KuotaAlreadyExist;
 import exceptions.QuestionAlreadyExist;
 //import exceptions.UserNotExists;
@@ -39,6 +40,7 @@ import domain.Erabiltzaile;
 public class DataAccess  {
 	protected static EntityManager  db;
 	protected static EntityManagerFactory emf;
+	private Vector<Erabiltzaile>recurrent=new Vector<Erabiltzaile>();
 
 
 	ConfigXML c;
@@ -345,6 +347,11 @@ public class DataAccess  {
 		us.addMugimendu(ap);
 		zenbatekoa=us.getDiruZorroa()-zenbatekoa;
 		us.setDiruZorroa(zenbatekoa);
+		this.recurrent.add(us);
+		System.out.println("recursive");
+		apustuErreplikatu(ap, us);
+		System.out.println("irten");
+		this.recurrent.removeAllElements();
 		db.getTransaction().commit();
 		return ap;
 			
@@ -367,7 +374,7 @@ public class DataAccess  {
 		
 		db.getTransaction().begin();
 		us.setDiruZorroa(dirua+us.getDiruZorroa());
-		DiruMug a = new DiruMug(dirua, data, "Diru Sarrera", user);
+		DiruMug a = new DiruMug(dirua, data, user);
 		us.addMugimendu(a);
 		db.getTransaction().commit();
 		System.out.println(user.getPosta() + " erabiltzailea eguneratua izan da."+dirua);
@@ -399,6 +406,39 @@ public class DataAccess  {
     	Erabiltzaile em = db.find(Erabiltzaile.class, user.getPosta());
     	db.getTransaction().commit();
 		return em;
+	}
+	
+	public void erreplikatu(Erabiltzaile user, String posta) throws ErabiltzaileNoExist {
+		
+		Erabiltzaile us =db.find(Erabiltzaile.class, user.getPosta());
+		Erabiltzaile er =db.find(Erabiltzaile.class, posta);
+		if(er==null)throw new ErabiltzaileNoExist(ResourceBundle.getBundle("Etiquetas").getString("ErNE"));
+		db.getTransaction().begin();
+		er.addReplikatu(us);
+		db.getTransaction().commit();
+				
+	}
+	public void apustuErreplikatu(Apustua ap, Erabiltzaile user) {
+		boolean badago=false;
+		Erabiltzaile us = db.find(Erabiltzaile.class, user.getPosta());
+		
+		for (Erabiltzaile er: us.getReplikatuak()) {
+			for(Erabiltzaile era:this.recurrent) {
+				if (era.getPosta().compareTo(er.getPosta())==0) {
+					badago=true;
+				}
+			}
+			if(!badago && er.getDiruZorroa()>=ap.getDirua()) {
+				Erabiltzaile gor = db.find(Erabiltzaile.class, er.getPosta());
+				gor.addApustu(ap.getDirua(), ap.getKuota(), ap.getFirstEventDate(), ap.getData());
+				gor.setDiruZorroa(gor.getDiruZorroa()-ap.getDirua());
+				gor.addMugimendu(ap);
+				this.recurrent.add(er);
+				apustuErreplikatu(ap, er);
+			}
+			badago=false;
+		}
+		
 	}
 		
 	public void close(){

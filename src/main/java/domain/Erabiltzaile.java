@@ -28,6 +28,7 @@ public abstract class Erabiltzaile implements Serializable {
 	private Vector<Apustua> apustuak = new Vector<Apustua>();
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private Vector<Mugimendu> mugimenduak = new Vector<Mugimendu>();
+	private Vector<Erabiltzaile>replikatuak = new Vector<Erabiltzaile>();
 	
 	public Erabiltzaile() {
 		super();
@@ -132,6 +133,18 @@ public abstract class Erabiltzaile implements Serializable {
 		Mugimendu mu = new Mugimendu(data, mug.getDirua(), this);
 		this.addMugimendu(mu);
 		return this.mugimenduak.remove(mug);
+	}
+	
+	public Vector<Erabiltzaile> getReplikatuak() {
+		return this.replikatuak;
+	}
+
+	public void setReplikatuak(Vector<Erabiltzaile> replikatuak) {
+		this.replikatuak = replikatuak;
+	}
+	
+	public boolean addReplikatu(Erabiltzaile erreplikatu)  {
+        return this.replikatuak.add(erreplikatu);
 	}
 	
 }

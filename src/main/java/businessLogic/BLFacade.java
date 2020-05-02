@@ -16,6 +16,7 @@ import domain.Kuota;
 import domain.Mugimendu;
 import exceptions.DirurikEZ;
 import exceptions.EmaitzaExist;
+import exceptions.ErabiltzaileNoExist;
 import exceptions.EventFinished;
 import exceptions.KuotaAlreadyExist;
 import exceptions.QuestionAlreadyExist;
@@ -83,5 +84,7 @@ public interface BLFacade  {
 	@WebMethod public boolean removeApustua (Mugimendu mu, Erabiltzaile user);
 	
 	@WebMethod public Erabiltzaile getUser(Erabiltzaile user);
+	
+	@WebMethod public void erreplikatu(Erabiltzaile user, String posta) throws ErabiltzaileNoExist;
 	
 }

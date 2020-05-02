@@ -17,6 +17,7 @@ import domain.Kuota;
 import domain.Mugimendu;
 import exceptions.DirurikEZ;
 import exceptions.EmaitzaExist;
+import exceptions.ErabiltzaileNoExist;
 import exceptions.EventFinished;
 import exceptions.KuotaAlreadyExist;
 import exceptions.QuestionAlreadyExist;
@@ -187,5 +188,12 @@ public class BLFacadeImplementation  implements BLFacade {
 		dBManager.close();
 		return em;
 	}
+	
+	public void erreplikatu(Erabiltzaile user, String posta) throws ErabiltzaileNoExist {
+		DataAccess dBManager = new DataAccess();
+    	dBManager.erreplikatu(user, posta);
+		dBManager.close();
+	}
+	
 }
 

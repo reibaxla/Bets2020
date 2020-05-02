@@ -21,7 +21,6 @@ public class DiruMug extends Mugimendu implements Serializable {
 	@XmlJavaTypeAdapter(IntegerAdapter.class)
 	@GeneratedValue
 	private Integer diruMugId;
-	private String diruSarrera;
 	@XmlIDREF
 	private Erabiltzaile user;
 	@XmlIDREF
@@ -30,9 +29,8 @@ public class DiruMug extends Mugimendu implements Serializable {
 	public DiruMug() {
 		super();
 	}
-	public DiruMug(double dirua, Date data, String diruSarrera, Erabiltzaile user) {
+	public DiruMug(double dirua, Date data, Erabiltzaile user) {
 		super(data, dirua, user);
-		this.diruSarrera=diruSarrera;
 	}
 	
 	public Integer getDiruMugId() {
@@ -40,13 +38,6 @@ public class DiruMug extends Mugimendu implements Serializable {
 	}
 	public void setDiruMugId(Integer diruMugId) {
 		this.diruMugId=diruMugId;
-	}
-	
-	public String getDiruSarrera() {
-		return this.diruSarrera;
-	}
-	public void setDiruSarrera(String diruSarrera) {
-		this.diruSarrera=diruSarrera;
 	}
 	
 }

@@ -55,6 +55,8 @@ public class MainGUI extends JFrame {
 	private JButton btnDiruaSartu;
 
 	private JButton btnEmaitza;
+
+	private JButton btnErreplikatu;
 	
 	/**
 	 * This is the default constructor
@@ -143,6 +145,16 @@ public class MainGUI extends JFrame {
 			btnDiruaSartu.setBounds(31, 137, 211, 50);
 			jContentPane.add(btnDiruaSartu);
 			jContentPane.add(getBtnMugIkus());
+			
+			btnErreplikatu = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Erreplikatu")); //$NON-NLS-1$ //$NON-NLS-2$
+			btnErreplikatu.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					JFrame a = new ErreplikatuGUI(logeatuta);
+					a.setVisible(true);
+				}
+			});
+			btnErreplikatu.setBounds(242, 186, 211, 45);
+			jContentPane.add(btnErreplikatu);
 		}
 		return jContentPane;
 	}
@@ -255,6 +267,7 @@ public class MainGUI extends JFrame {
 		btnKuotajarri.setText(ResourceBundle.getBundle("Etiquetas").getString("PutFee"));
 		btnMugIkus.setText(ResourceBundle.getBundle("Etiquetas").getString("MoveBnt"));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainTitle"));
+		btnErreplikatu.setText(ResourceBundle.getBundle("Etiquetas").getString("Erreplicatu"));
 	}
 	private JButton getJButtonCreateEvent() {
 		if (jButtonCreateEvent == null) {
