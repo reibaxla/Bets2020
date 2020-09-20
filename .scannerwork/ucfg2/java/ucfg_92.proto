@@ -1,0 +1,16 @@
+
++domain.Event#getEventDate()Ljava/util/Date;Q
+GC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/domain/Event.javaL L("1*Ù
+1Q
+GC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/domain/Event.javaM	 M(“
+
+Q
+GC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/domain/Event.javaM	 M(
+%0java.util.Date"__id**
+domain.Event"
+	eventDate"k
+Q
+GC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/domain/Event.javaM M(
+
+%0java.util.DateB
+domain.Event

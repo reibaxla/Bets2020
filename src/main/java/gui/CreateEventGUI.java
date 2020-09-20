@@ -120,9 +120,9 @@ public class CreateEventGUI extends JFrame {
 		
 		Date data = calendarMio.getTime();
 		
-		data.setHours(0);
-	    data.setMinutes(0);
-	    data.setSeconds(0);
+		//data.setHours(0);
+	    //data.setMinutes(0);
+	    //data.setSeconds(0);
 	    data.setTime(data.getTime() - data.getTime() % 1000);
 
 		

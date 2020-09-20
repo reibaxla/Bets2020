@@ -1,0 +1,7 @@
+organization=reibaxla
+projectKey=Bets2020_XabierLarrea
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.12128
+dashboardUrl=https://sonarcloud.io/dashboard?id=Bets2020_XabierLarrea
+ceTaskId=AXSssrztSvSje_i3HB-3
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AXSssrztSvSje_i3HB-3

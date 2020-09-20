@@ -294,13 +294,12 @@ public class EmaitzakJarriGUI extends JFrame {
 	private boolean isExpire(Date date) {
 	    
         SimpleDateFormat sdf =  new SimpleDateFormat("MMM-dd-yyyy hh:mm:ss a"); // Jan-20-2015 1:30:55 PM
-           Date d=null;
-           Date d1=null;
         String today=   getToday("MMM-dd-yyyy hh:mm:ss a");
         try {
             //System.out.println("expdate>> "+date);
             //System.out.println("today>> "+today+"\n\n");
-            d=date;
+            Date d=date;
+            Date d1 = date;
             try {
 				d1 = sdf.parse(today);
 			} catch (java.text.ParseException e) {

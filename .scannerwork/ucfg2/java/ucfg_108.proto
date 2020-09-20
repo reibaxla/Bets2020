@@ -1,0 +1,45 @@
+
+@gui.ApustuEginGUI#getToday(Ljava/lang/String;)Ljava/lang/String;X
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/ApustuEginGUI.java≥ ≥( "1*ñ
+
+1X
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/ApustuEginGUI.java¥ ¥(ÉÄ
+X
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/ApustuEginGUI.java¥ ¥(
+%0java.util.Date"java.util.Dateï
+í
+X
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/ApustuEginGUI.java¥ ¥(
+%1"java.util.Date#<init>()V*
+
+%0java.util.Dateì
+ê
+X
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/ApustuEginGUI.java¥ ¥(
+datejava.util.Date"__id*
+
+%0java.util.Dateõò
+X
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/ApustuEginGUI.javaµ µ(! 
+%2java.text.SimpleDateFormat"java.text.SimpleDateFormat›
+⁄
+X
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/ApustuEginGUI.javaµ µ()
+%3"6java.text.SimpleDateFormat#<init>(Ljava/lang/String;)V*"
+ 
+%2java.text.SimpleDateFormat*
+
+formatjava.lang.Stringéã
+X
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/ApustuEginGUI.javaµ µ(6
+%4java.lang.String"?java.text.DateFormat#format(Ljava/util/Date;)Ljava/lang/String;*"
+ 
+%2java.text.SimpleDateFormat*
+
+datejava.util.Date2format(Ljava/util/Date;)"t
+X
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/ApustuEginGUI.javaµ µ(7
+
+%4java.lang.String:
+formatjava.lang.StringB"
+gui.ApustuEginGUI

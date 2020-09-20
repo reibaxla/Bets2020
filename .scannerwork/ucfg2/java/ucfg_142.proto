@@ -1,0 +1,42 @@
+
+TbusinessLogic.BLFacadeImplementation#storeEvent(Ljava/lang/String;Ljava/util/Date;)Ik
+_C:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/businessLogic/BLFacadeImplementation.java„ „("startingBlock*±
+startingBlockk
+_C:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/businessLogic/BLFacadeImplementation.java„ „(8´
+±
+k
+_C:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/businessLogic/BLFacadeImplementation.javaƒ ƒ(
+%0"
+__annotate*
+	WebMethod*!
+
+deskripzioajava.lang.String§
+¤
+k
+_C:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/businessLogic/BLFacadeImplementation.java„! „(,
+deskripzioajava.lang.String"__annotation*
+
+%0«
+¨
+k
+_C:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/businessLogic/BLFacadeImplementation.javaƒ ƒ(
+%1"
+__annotate*
+	WebMethod*
+
+datajava.util.Datež
+›
+k
+_C:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/businessLogic/BLFacadeImplementation.java„3 „(7
+datajava.util.Date"__annotation*
+
+%1*
+1*ç
+1k
+_C:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/businessLogic/BLFacadeImplementation.java… …(,"u
+k
+_C:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/businessLogic/BLFacadeImplementation.javaˆ ˆ(
+"":
+deskripzioajava.lang.String:
+datajava.util.DateB(&
+$businessLogic.BLFacadeImplementation

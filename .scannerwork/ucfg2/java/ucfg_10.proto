@@ -1,0 +1,112 @@
+
+7gui.gonbidatuaGUI#getJContentPane()Ljavax/swing/JPanel;V
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/gonbidatuaGUI.javaC C("3*≥
+2V
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/gonbidatuaGUI.javaE E(âÜ
+V
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/gonbidatuaGUI.javaE E(
+%1javax.swing.JPanel"javax.swing.JPanelõ
+ò
+V
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/gonbidatuaGUI.javaE E(
+%2"javax.swing.JPanel#<init>()V*
+
+%1javax.swing.JPanel§
+°
+V
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/gonbidatuaGUI.javaE E(%
+gui.gonbidatuaGUI"
+jContentPane"__id*
+
+%1javax.swing.JPanel§
+°
+V
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/gonbidatuaGUI.javaF F(
+%3javax.swing.JPanel"__id*'*%
+gui.gonbidatuaGUI"
+jContentPaneÈÊ
+V
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/gonbidatuaGUI.javaF F(
+
+%4void"7java.awt.Container#setLayout(Ljava/awt/LayoutManager;)V*
+
+%3javax.swing.JPanel*
+""2#setLayout(Ljava/awt/LayoutManager;)§
+°
+V
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/gonbidatuaGUI.javaG G(
+%5javax.swing.JPanel"__id*'*%
+gui.gonbidatuaGUI"
+jContentPaneƒ
+¡
+V
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/gonbidatuaGUI.javaG G($
+%6javax.swing.JLabel"6gui.gonbidatuaGUI#getLblNewLabel()Ljavax/swing/JLabel;*
+gui.gonbidatuaGUIäá
+V
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/gonbidatuaGUI.javaG G(%
+%7java.awt.Component"@java.awt.Container#add(Ljava/awt/Component;)Ljava/awt/Component;*
+
+%5javax.swing.JPanel*
+
+%6javax.swing.JLabel2add(Ljava/awt/Component;)§
+°
+V
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/gonbidatuaGUI.javaH H(
+%8javax.swing.JPanel"__id*'*%
+gui.gonbidatuaGUI"
+jContentPane¡
+æ
+V
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/gonbidatuaGUI.javaH H(
+%9javax.swing.JButton"2gui.gonbidatuaGUI#getBoton3()Ljavax/swing/JButton;*
+gui.gonbidatuaGUIåâ
+V
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/gonbidatuaGUI.javaH H( 
+%10java.awt.Component"@java.awt.Container#add(Ljava/awt/Component;)Ljava/awt/Component;*
+
+%8javax.swing.JPanel*
+
+%9javax.swing.JButton2add(Ljava/awt/Component;)•
+¢
+V
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/gonbidatuaGUI.javaI I(
+%11javax.swing.JPanel"__id*'*%
+gui.gonbidatuaGUI"
+jContentPaneø
+º
+V
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/gonbidatuaGUI.javaI I(
+%12javax.swing.JPanel"0gui.gonbidatuaGUI#getPanel()Ljavax/swing/JPanel;*
+gui.gonbidatuaGUIçä
+V
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/gonbidatuaGUI.javaI I(
+%13java.awt.Component"@java.awt.Container#add(Ljava/awt/Component;)Ljava/awt/Component;*
+
+%11javax.swing.JPanel*
+
+%12javax.swing.JPanel2add(Ljava/awt/Component;)*
+1*ä
+3V
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/gonbidatuaGUI.javaD D(§
+°
+V
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/gonbidatuaGUI.javaD D(
+%0javax.swing.JPanel"__id*'*%
+gui.gonbidatuaGUI"
+jContentPane*
+2
+1*˙
+1V
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/gonbidatuaGUI.javaK	 K(•
+¢
+V
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/gonbidatuaGUI.javaK	 K(
+%14javax.swing.JPanel"__id*'*%
+gui.gonbidatuaGUI"
+jContentPane"u
+V
+LC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/gonbidatuaGUI.javaK K(
+
+%14javax.swing.JPanelB
+gui.gonbidatuaGUI

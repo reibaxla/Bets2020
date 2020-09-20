@@ -49,7 +49,7 @@ public class Apustua extends Mugimendu implements Serializable {
 		this.firstEventDate=firstEventDate;
 	}
 	
-	public Apustua(Integer apustuId, double dirua, Vector<Kuota> kuota, Date firstEventDate, Date data, Erabiltzaile user, boolean Irabazi) {
+	public Apustua(Integer apustuId, double dirua, Date firstEventDate, Date data, Erabiltzaile user, boolean Irabazi) {
 		super(data, dirua, user);
 		this.apustuId=apustuId;
 		this.irabazi=Irabazi;

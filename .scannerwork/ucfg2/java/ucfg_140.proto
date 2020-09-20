@@ -1,0 +1,33 @@
+
+WbusinessLogic.BLFacadeImplementation#getEventsMonth(Ljava/util/Date;)Ljava/util/Vector;i
+_C:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/businessLogic/BLFacadeImplementation.java^  ^(."startingBlock*Ê
+startingBlocki
+_C:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/businessLogic/BLFacadeImplementation.java^. ^(9©
+¦
+i
+_C:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/businessLogic/BLFacadeImplementation.java^ ^(
+%0"
+__annotate*
+	WebMethod*
+
+datejava.util.Dateœ
+™
+i
+_C:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/businessLogic/BLFacadeImplementation.java^4 ^(8
+datejava.util.Date"__annotation*
+
+%0*
+1*“
+1i
+_C:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/businessLogic/BLFacadeImplementation.java_ _('—
+”
+i
+_C:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/businessLogic/BLFacadeImplementation.java` `(5
+datesjava.util.Vector"__id*
+"""ˆ
+i
+_C:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/businessLogic/BLFacadeImplementation.javab b(
+
+datesjava.util.Vector:
+datejava.util.DateB(&
+$businessLogic.BLFacadeImplementation

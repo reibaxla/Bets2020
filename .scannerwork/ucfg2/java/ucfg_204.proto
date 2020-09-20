@@ -1,0 +1,110 @@
+
+0gui.MainGUI#getBtnMugIkus()Ljavax/swing/JButton;R
+FC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/MainGUI.javaŸ Ÿ("3*‚
+2R
+FC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/MainGUI.java¡ ¡(‡„
+R
+FC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/MainGUI.java¡ ¡(
+%1javax.swing.JButton"javax.swing.JButton™
+–
+R
+FC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/MainGUI.java¡ ¡(
+%2"javax.swing.JButton#<init>()V*
+
+%1javax.swing.JButton™
+–
+R
+FC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/MainGUI.java¡ ¡(
+gui.MainGUI"
+
+btnMugIkus"__id*
+
+%1javax.swing.JButton™
+–
+R
+FC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/MainGUI.java¢ ¢(
+%3javax.swing.JButton"__id**
+gui.MainGUI"
+
+btnMugIkusö
+ó
+R
+FC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/MainGUI.java¢ ¢(;
+%4java.util.ResourceBundle"Pjava.util.ResourceBundle#getBundle(Ljava/lang/String;)Ljava/util/ResourceBundle;*"
+java.util.ResourceBundle*
+	Etiquetas‡„
+R
+FC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/MainGUI.java¢ ¢(P
+%5java.lang.String"Hjava.util.ResourceBundle#getString(Ljava/lang/String;)Ljava/lang/String;* 
+
+%4java.util.ResourceBundle*	
+MoveBnt2getString(Ljava/lang/String;)ðí
+R
+FC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/MainGUI.java¢ ¢(Q
+
+%6void"7javax.swing.AbstractButton#setText(Ljava/lang/String;)V*
+
+%3javax.swing.JButton*
+
+%5java.lang.String2setText(Ljava/lang/String;)™
+–
+R
+FC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/MainGUI.java£ £(
+%7javax.swing.JButton"__id**
+gui.MainGUI"
+
+btnMugIkus…‚
+R
+FC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/MainGUI.java£$ £(2
+%8Lgui/MainGUI$9579;"Lgui/MainGUI$9579;•
+’
+R
+FC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/MainGUI.java£  ¨(
+%9"java.lang.Object#<init>()V*
+
+%8Lgui/MainGUI$9579;¡ž
+R
+FC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/MainGUI.java£ ¨(
+%10void"Njavax.swing.AbstractButton#addActionListener(Ljava/awt/event/ActionListener;)V*
+
+%7javax.swing.JButton*
+
+%8Lgui/MainGUI$9579;22addActionListener(Ljava/awt/event/ActionListener;)š
+—
+R
+FC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/MainGUI.java© ©(
+%11javax.swing.JButton"__id**
+gui.MainGUI"
+
+btnMugIkusÒÏ
+R
+FC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/MainGUI.java© ©()
+%12void"#java.awt.Component#setBounds(IIII)V*
+
+%11javax.swing.JButton*2*2º*2Ó*2-2setBounds(IIII)*
+1*û
+3R
+FC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/MainGUI.java   (™
+–
+R
+FC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/MainGUI.java   (
+%0javax.swing.JButton"__id**
+gui.MainGUI"
+
+btnMugIkus*
+2
+1*è
+1R
+FC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/MainGUI.java«	 «(š
+—
+R
+FC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/MainGUI.java«	 «(
+%13javax.swing.JButton"__id**
+gui.MainGUI"
+
+btnMugIkus"r
+R
+FC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/gui/MainGUI.java« «(
+
+%13javax.swing.JButtonB
+gui.MainGUI

@@ -1,0 +1,37 @@
+
+)domain.Event#toString()Ljava/lang/String;Q
+GC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/domain/Event.javaU U("1*Æ
+1Q
+GC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/domain/Event.javaV	 V(˜
+•
+Q
+GC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/domain/Event.javaV	 V(
+%0java.lang.Integer"__id*!*
+domain.Event"
+eventNumberš
+—
+Q
+GC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/domain/Event.javaV	 V(
+%1java.lang.String"__concat*
+
+%0java.lang.Integer*
+;—
+”
+Q
+GC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/domain/Event.javaV V($
+%2java.lang.String"__id*!*
+domain.Event"
+description¬
+©
+Q
+GC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/domain/Event.javaV	 V($
+%3java.lang.String"__concat*
+
+%1java.lang.String*
+
+%2java.lang.String"m
+Q
+GC:/Users/Xabier Larrea/Desktop/bets2020/src/main/java/domain/Event.javaV V(%
+
+%3java.lang.StringB
+domain.Event
